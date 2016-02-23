@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'BXCalendar_Example', :exclusive => true do
+  pod 'BXCalendar', :path => '../'
+end
+
+target 'BXCalendar_Tests', :exclusive => true do
+  pod 'BXCalendar', :path => '../'
+
+  
+end
