@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="BXCalendar_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,11 +17,46 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9Y-JT-AgO">
+                                <rect key="frame" x="0.0" y="-23.5" width="600" height="646"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="C9Y-JT-AgO" secondAttribute="height" multiplier="80:86" id="Wwa-ey-8Ag"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Mnx-rs-RHT" kind="embed" id="XDl-1e-Yw7"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="C9Y-JT-AgO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="7FV-7z-ccx"/>
+                            <constraint firstAttribute="trailing" secondItem="C9Y-JT-AgO" secondAttribute="trailing" id="WqY-0q-OAU"/>
+                            <constraint firstItem="C9Y-JT-AgO" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="oGh-tH-gdI"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="199" y="353"/>
+        </scene>
+        <!--Calendar View Controller-->
+        <scene sceneID="al6-rl-am8">
+            <objects>
+                <viewController id="Mnx-rs-RHT" customClass="BXCalendarViewController" customModule="BXCalendar" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="687-1A-Ebn"/>
+                        <viewControllerLayoutGuide type="bottom" id="3yJ-dz-ndT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yng-yM-Oh0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="646"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mej-4g-oiZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="219" y="1054.5"/>
         </scene>
     </scenes>
 </document>

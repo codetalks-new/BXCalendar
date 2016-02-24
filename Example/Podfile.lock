@@ -1,0 +1,37 @@
+PODS:
+  - BXCalendar (0.1.0):
+    - BXForm
+  - BXForm (0.1.4):
+    - BXiOSUtils
+    - BXModel
+    - PinAuto
+    - PinAutoLayout
+  - BXiOSUtils (0.1.5)
+  - BXModel (0.2.1):
+    - SwiftyJSON
+  - PinAuto (1.2)
+  - PinAutoLayout (1.1.0)
+  - Reveal-iOS-SDK (1.6.2)
+  - SwiftyJSON (2.3.2)
+
+DEPENDENCIES:
+  - BXCalendar (from `../`)
+  - Reveal-iOS-SDK
+
+EXTERNAL SOURCES:
+  BXCalendar:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BXCalendar: 683046544f71e79162218f1f5b0cc45fd015575f
+  BXForm: 64e710685e34d4e26f39c6ef3cfe1bc597cbf89d
+  BXiOSUtils: 00299e153728076d5ffe5813dd855fc0c823ca52
+  BXModel: dd06e85b7ca3f5a7415f992023cdf984a292bd56
+  PinAuto: 0184951a80225a5aa1bec80aaa0f2e3102a1dda9
+  PinAutoLayout: 9d0863eed45d1d6277aa663c8a32b77b03a16bf1
+  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+
+PODFILE CHECKSUM: 7879bca02b843933bfff6ff15fcc886d2bde98c1
+
+COCOAPODS: 1.0.0.beta.3

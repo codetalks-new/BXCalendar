@@ -1,0 +1,6 @@
+framework module BXCalendar {
+  umbrella header "BXCalendar-umbrella.h"
+
+  export *
+  module * { export * }
+}

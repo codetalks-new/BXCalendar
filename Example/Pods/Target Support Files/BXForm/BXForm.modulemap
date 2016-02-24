@@ -1,0 +1,6 @@
+framework module BXForm {
+  umbrella header "BXForm-umbrella.h"
+
+  export *
+  module * { export * }
+}

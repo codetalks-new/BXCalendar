@@ -1,11 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'BXCalendar_Example', :exclusive => true do
+target 'BXCalendar_Example' do
   pod 'BXCalendar', :path => '../'
+  pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 end
 
-target 'BXCalendar_Tests', :exclusive => true do
+target 'BXCalendar_Tests' do
   pod 'BXCalendar', :path => '../'
 
   

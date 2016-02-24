@@ -1,0 +1,6 @@
+framework module BXModel {
+  umbrella header "BXModel-umbrella.h"
+
+  export *
+  module * { export * }
+}

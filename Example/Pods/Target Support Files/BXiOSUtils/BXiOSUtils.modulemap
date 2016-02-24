@@ -1,0 +1,6 @@
+framework module BXiOSUtils {
+  umbrella header "BXiOSUtils-umbrella.h"
+
+  export *
+  module * { export * }
+}
