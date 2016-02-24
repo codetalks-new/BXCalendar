@@ -5,9 +5,19 @@
 [![License](https://img.shields.io/cocoapods/l/BXCalendar.svg?style=flat)](http://cocoapods.org/pods/BXCalendar)
 [![Platform](https://img.shields.io/cocoapods/p/BXCalendar.svg?style=flat)](http://cocoapods.org/pods/BXCalendar)
 
-[![Preview1](.Screenshots/bx_calendar_01.png)
+[![Preview1](./ScreenShots/bx_calendar_01.png)
 
 ## Usage
+
+
+```swift
+let vc = BXCalendarDatePickerController()
+vc.updateSelectedDates([NSDate()])
+vc.didSelectedDates = { dates in
+}
+
+presentViewController(vc, animated: true, completion: nil)
+```
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
