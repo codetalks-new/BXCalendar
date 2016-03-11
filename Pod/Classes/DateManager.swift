@@ -94,6 +94,15 @@ public extension Date{
   public var long_string:String{
     return "\(year)-\(month)-\(day)"
   }
+  
+  // parse yyyy-MM-dd
+  public static func parse(dateStr: String, format: String = "yyyy-MM-dd") -> Date {
+    let dateFmt = NSDateFormatter()
+    dateFmt.timeZone = NSTimeZone.defaultTimeZone()
+    dateFmt.dateFormat = format
+    let date =  dateFmt.dateFromString(dateStr)!
+    return Date(date: date)
+  }
 }
 
 extension Date{
