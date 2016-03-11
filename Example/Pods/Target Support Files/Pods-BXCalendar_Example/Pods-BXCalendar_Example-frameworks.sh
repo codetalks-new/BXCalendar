@@ -84,20 +84,20 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-BXCalendar_Example/BXCalendar.framework"
-  install_framework "Pods-BXCalendar_Example/BXForm.framework"
-  install_framework "Pods-BXCalendar_Example/BXModel.framework"
-  install_framework "Pods-BXCalendar_Example/BXiOSUtils.framework"
-  install_framework "Pods-BXCalendar_Example/PinAuto.framework"
-  install_framework "Pods-BXCalendar_Example/PinAutoLayout.framework"
-  install_framework "Pods-BXCalendar_Example/SwiftyJSON.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXCalendar/BXCalendar.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXForm/BXForm.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXModel/BXModel.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXiOSUtils/BXiOSUtils.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/PinAuto/PinAuto.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/PinAutoLayout/PinAutoLayout.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-BXCalendar_Example/BXCalendar.framework"
-  install_framework "Pods-BXCalendar_Example/BXForm.framework"
-  install_framework "Pods-BXCalendar_Example/BXModel.framework"
-  install_framework "Pods-BXCalendar_Example/BXiOSUtils.framework"
-  install_framework "Pods-BXCalendar_Example/PinAuto.framework"
-  install_framework "Pods-BXCalendar_Example/PinAutoLayout.framework"
-  install_framework "Pods-BXCalendar_Example/SwiftyJSON.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXCalendar/BXCalendar.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXForm/BXForm.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXModel/BXModel.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/BXiOSUtils/BXiOSUtils.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/PinAuto/PinAuto.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/PinAutoLayout/PinAutoLayout.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi

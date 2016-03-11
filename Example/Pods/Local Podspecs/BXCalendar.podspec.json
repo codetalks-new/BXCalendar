@@ -1,6 +1,6 @@
 {
   "name": "BXCalendar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "一个适用于中国国情的日历选择器",
   "description": "一个适用于中国国情的日历选择器,支持多选,农历显示,法定节假日显示",
   "homepage": "https://github.com/banxi1988/BXCalendar",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/banxi1988/BXCalendar.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"

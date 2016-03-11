@@ -1,8 +1,8 @@
 EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$CONFIGURATION_BUILD_DIR/BXCalendar" "$CONFIGURATION_BUILD_DIR/BXForm" "$CONFIGURATION_BUILD_DIR/BXModel" "$CONFIGURATION_BUILD_DIR/BXiOSUtils" "$CONFIGURATION_BUILD_DIR/PinAuto" "$CONFIGURATION_BUILD_DIR/PinAutoLayout" "$CONFIGURATION_BUILD_DIR/SwiftyJSON"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/BXCalendar.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXForm.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXModel.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXiOSUtils.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PinAuto.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PinAutoLayout.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyJSON.framework/Headers"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/BXCalendar/BXCalendar.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXForm/BXForm.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXModel/BXModel.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/BXiOSUtils/BXiOSUtils.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PinAuto/PinAuto.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PinAutoLayout/PinAutoLayout.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework/Headers"
 OTHER_LDFLAGS = $(inherited) -framework "BXCalendar" -framework "BXForm" -framework "BXModel" -framework "BXiOSUtils" -framework "PinAuto" -framework "PinAutoLayout" -framework "SwiftyJSON"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
-PODS_FRAMEWORK_BUILD_PATH = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-BXCalendar_Example"
 PODS_ROOT = ${SRCROOT}/Pods
