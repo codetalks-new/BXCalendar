@@ -1,6 +1,0 @@
-framework module PinAutoLayout {
-  umbrella header "PinAutoLayout-umbrella.h"
-
-  export *
-  module * { export * }
-}

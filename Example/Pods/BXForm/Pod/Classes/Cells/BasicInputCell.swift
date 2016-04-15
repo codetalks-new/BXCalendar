@@ -51,10 +51,10 @@ public class BasicInputCell : StaticTableViewCell{
   }
   
   public func installConstaints(){
-    textField.pinTrailing(15)
-    textField.pinBottom(10)
-    textField.pinLeading(15)
-    textField.pinTop(10)
+    textField.pa_trailing.eq(15).install() // pa_trailing.eq(15)
+    textField.pa_bottom.eq(10).install() //pinBottom(10)
+    textField.pa_leading.eq(15).install() // pa_leading.eq(15)
+    textField.pa_top.eq(10).install() // pa_top.eq(10)
     
   }
   

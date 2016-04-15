@@ -9,6 +9,7 @@
 import UIKit
 import BXModel
 import BXiOSUtils
+import PinAuto
 
 
 public class BasicTextInputCell : StaticTableViewCell{
@@ -50,10 +51,10 @@ public class BasicTextInputCell : StaticTableViewCell{
   }
   
   public func installConstaints(){
-    textView.pinTrailing(15)
-    textView.pinBottom(10)
-    textView.pinLeading(15)
-    textView.pinTop(10)
+    textView.pa_trailing.eq(15).install() // pa_trailing.eq(15)
+    textView.pa_bottom.eq(10).install() //pinBottom(10)
+    textView.pa_leading.eq(15).install() // pa_leading.eq(15)
+    textView.pa_top.eq(10).install() // pa_top.eq(10)
     
   }
   

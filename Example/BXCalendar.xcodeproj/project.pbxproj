@@ -166,12 +166,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BXCalendar_Example" */;
 			buildPhases = (
-				60764D3924154138B5A2B0AD /* Check Pods Manifest.lock */,
+				60764D3924154138B5A2B0AD /* 📦 Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				AF9558F46361C4180B24A17C /* Embed Pods Frameworks */,
-				C19A191CB0710F37C9A64225 /* Copy Pods Resources */,
+				AF9558F46361C4180B24A17C /* 📦 Embed Pods Frameworks */,
+				C19A191CB0710F37C9A64225 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -186,12 +186,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BXCalendar_Tests" */;
 			buildPhases = (
-				6C13587DD9350BA65A376CD0 /* Check Pods Manifest.lock */,
+				6C13587DD9350BA65A376CD0 /* 📦 Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				5FA804D0E3F51CFF1C830BF5 /* Embed Pods Frameworks */,
-				7B43C4A3818E6DF7A399B7F0 /* Copy Pods Resources */,
+				5FA804D0E3F51CFF1C830BF5 /* 📦 Embed Pods Frameworks */,
+				7B43C4A3818E6DF7A399B7F0 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -262,14 +262,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5FA804D0E3F51CFF1C830BF5 /* Embed Pods Frameworks */ = {
+		5FA804D0E3F51CFF1C830BF5 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,14 +277,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BXCalendar_Tests/Pods-BXCalendar_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		60764D3924154138B5A2B0AD /* Check Pods Manifest.lock */ = {
+		60764D3924154138B5A2B0AD /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,14 +292,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6C13587DD9350BA65A376CD0 /* Check Pods Manifest.lock */ = {
+		6C13587DD9350BA65A376CD0 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,14 +307,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		7B43C4A3818E6DF7A399B7F0 /* Copy Pods Resources */ = {
+		7B43C4A3818E6DF7A399B7F0 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,14 +322,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BXCalendar_Tests/Pods-BXCalendar_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AF9558F46361C4180B24A17C /* Embed Pods Frameworks */ = {
+		AF9558F46361C4180B24A17C /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,14 +337,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BXCalendar_Example/Pods-BXCalendar_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C19A191CB0710F37C9A64225 /* Copy Pods Resources */ = {
+		C19A191CB0710F37C9A64225 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -57,19 +57,19 @@ public class ConfirmTitleBar : UIView,BXBindable {
   }
   
   public func installConstaints(){
-    cancelButton.pinVertical(0)
-    cancelButton.pinLeading(4)
-    cancelButton.pinWidth(40)
+    cancelButton.pac_vertical() // pac_vertical(0)
+    cancelButton.pa_leading.eq(4).install() // pa_leading.eq(4)
+    cancelButton.pa_width.eq(40).install() // pa_width.eq(40)
     
-    titleLabel.pinCenterY()
-    titleLabel.pinTrailingToSibing(okButton, margin: 4)
-    titleLabel.pinLeadingToSibling(cancelButton, margin: 4)
+    titleLabel.pa_centerY.install() //pa_centerY.install()
+    titleLabel.pa_before(okButton, offset: 4).install() //pa_before(okButton, margin: 4)
+    titleLabel.pa_after(cancelButton, offset: 4).install() // pinLeadingToSibling(cancelButton, margin: 4)
     titleLabel.setContentHuggingPriority(200, forAxis: .Horizontal)
     titleLabel.setContentCompressionResistancePriority(700, forAxis: .Horizontal)
     
-    okButton.pinTrailing(4)
-    okButton.pinVertical(0)
-    okButton.pinWidth(40)
+    okButton.pa_trailing.eq(4).install() //pa_trailing.eq(4)
+    okButton.pac_vertical() //pac_vertical(0)
+    okButton.pa_width.eq(40).install() //pa_width.eq(40)
     
   }
   

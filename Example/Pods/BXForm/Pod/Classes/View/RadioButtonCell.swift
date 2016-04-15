@@ -53,7 +53,7 @@ public class RadioButtonCell : UICollectionViewCell,BXBindable,UICollectionViewD
   }
   
   func installConstaints(){
-    radioButton.pinEdge(UIEdgeInsets(top: 0, left: 0, bottom: 0, right:0 ))
+    radioButton.pac_edge(UIEdgeInsets(top: 0, left: 0, bottom: 0, right:0 ))
   }
   
   func setupAttrs(){

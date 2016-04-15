@@ -10,7 +10,7 @@ import Foundation
 
 
 import UIKit
-import PinAutoLayout
+import PinAuto
 import BXiOSUtils
 
 public class BasePickerController: UIViewController {
@@ -74,24 +74,24 @@ public class BasePickerController: UIViewController {
   
   func installConstaints(){
     confirmBar.setContentCompressionResistancePriority(900, forAxis: .Vertical)
-    pickerView.pinHorizontal(0)
+    pickerView.pac_horizontal(0) //pinHorizontal(0)
     pickerView.clipsToBounds = true
-    confirmBar.pinHeight(44)
-    confirmBar.pinHorizontal(0)
+    confirmBar.pa_height.eq(44).install() // pa_height.eq(44)
+    confirmBar.pac_horizontal(0)
     
-    dividerView.pinHeight(1)
-    dividerView.pinHorizontal(0)
+    dividerView.pa_height.eq(1).install()
+    dividerView.pac_horizontal(0)
     
     if confirmBarOnTop{
-      pinTopLayoutGuide(confirmBar)
-      pickerView.pinBelowSibling(confirmBar, margin: 0)
-      pinBottomLayoutGuide(pickerView)
-      dividerView.pinBelowSibling(confirmBar, margin: 0)
+      confirmBar.pa_below(topLayoutGuide).install()
+      pickerView.pa_below(confirmBar, offset: 0).install()
+      pickerView.pa_above(bottomLayoutGuide).install()
+      dividerView.pa_below(confirmBar, offset: 0).install()
     }else{
-      pinBottomLayoutGuide(confirmBar)
-      pickerView.pinAboveSibling(confirmBar, margin: 0)
-      pinTopLayoutGuide(pickerView)
-      dividerView.pinAboveSibling(confirmBar, margin: 0)
+      confirmBar.pa_above(bottomLayoutGuide).install()
+      pickerView.pa_above(confirmBar, offset: 0).install()
+      pickerView.pa_below(topLayoutGuide).install()
+      dividerView.pa_above(confirmBar, offset: 0).install()
     }
   }
   
@@ -107,8 +107,8 @@ public class BasePickerController: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     
-    confirmBar.cancelButton.addTarget(self, action: "onCancelButtonPressed:", forControlEvents: .TouchUpInside)
-    confirmBar.okButton.addTarget(self, action: "onOkButtonPressed:", forControlEvents: .TouchUpInside)
+    confirmBar.cancelButton.addTarget(self, action: #selector(BasePickerController.onCancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
+    confirmBar.okButton.addTarget(self, action: #selector(BasePickerController.onOkButtonPressed(_:)), forControlEvents: .TouchUpInside)
   }
   
   public var onCancelHandler:( Void -> Void)?

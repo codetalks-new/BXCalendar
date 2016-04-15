@@ -16,7 +16,7 @@ public class ActionSheetPresentationController:UIPresentationController{
     view.alpha  = 0.0
     view.userInteractionEnabled = true
     view.tag = 1024
-    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismiss"))
+    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ActionSheetPresentationController.dismiss)))
     return view
   }()
   

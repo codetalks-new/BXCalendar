@@ -13,34 +13,46 @@ import BXModel
 
 public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: UITableViewController {
     public private(set) var options:[T] = []
-    var adapter : SimpleTableViewAdapter<T>!
-    var selectedItems :Set<T> = []
+    public let adapter : SimpleTableViewAdapter<T> = SimpleTableViewAdapter<T>(cellStyle:.Default)
+    public private(set) var selectedItems :Set<T> = []
     public var completionHandler : ( (Set<T>) -> Void )?
     public var onSelectOption:(T -> Void)?
     public var multiple = true
     public var showSelectToolbar = true
+    public var isSelectAll = false
   
-   public init(){
-        super.init(style: .Grouped)
-    }
+   public convenience init(){
+    self.init(options:[],style: .Grouped)
+  }
+  
+  public init(options:[T], style:UITableViewStyle = .Plain){
+    self.options = options
+    adapter.updateItems(options)
+    super.init(style: style)
+  }
   
   public func updateOptions(options:[T]){
     self.options.removeAll()
     self.options.appendContentsOf(options)
-    if isViewLoaded(){
-     adapter.updateItems(options)
-    }
+    adapter.updateItems(options)
+  }
+  
+  public func setInitialSelectedItems<S:SequenceType where S.Generator.Element == T>(items:S){
+    selectedItems.removeAll()
+    selectedItems.unionInPlace(items)
   }
  
   
   public var selectAllButton:UIBarButtonItem?
+  private var originalToolbarHidden: Bool?
   public override func loadView() {
     super.loadView()
+    originalToolbarHidden = navigationController?.toolbarHidden
     if showSelectToolbar{
       navigationController?.toolbarHidden = false
       navigationController?.toolbar.tintColor = FormColors.primaryColor
       let leftSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-      let selectAllButton = UIBarButtonItem(title:isSelectAll ? "全不选": "全选", style: .Plain, target: self, action: "selectAllButtonPressed:")
+      let selectAllButton = UIBarButtonItem(title:isSelectAll ? "全不选": "全选", style: .Plain, target: self, action: #selector(MultipleSelectViewController.selectAllButtonPressed(_:)))
       selectAllButton.tintColor = UIColor.blueColor()
       toolbarItems = [leftSpaceItem,selectAllButton]
       self.selectAllButton = selectAllButton
@@ -48,7 +60,6 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
   }
   
   
-  var isSelectAll = false
   func selectAllButtonPressed(sender:AnyObject){
     isSelectAll = !isSelectAll
     selectAllButton?.title = isSelectAll ? "全不选": "全选"
@@ -62,14 +73,16 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
   
     public override func viewDidLoad() {
         super.viewDidLoad()
-        adapter = SimpleTableViewAdapter(tableView: tableView, items:options, cellStyle: .Default)
+        adapter.updateItems(options)//
+        adapter.bindTo(tableView)
+      
         adapter.configureCellBlock = { (cell,indexPath) in
                 let item = self.adapter.itemAtIndexPath(indexPath)
             cell.accessoryType =  self.selectedItems.contains(item) ? .Checkmark: .None
         }
         tableView.tableFooterView = UIView()
         if multiple{
-          let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "selectDone:")
+          let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(MultipleSelectViewController.selectDone(_:)))
           self.navigationItem.rightBarButtonItem = doneButton
         }
       
@@ -109,6 +122,13 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
           selectDone(cell)
         }
     }
+  
+  public override func viewDidDisappear(animated: Bool) {
+    super.viewDidDisappear(animated)
+    if let state = originalToolbarHidden{
+      navigationController?.setToolbarHidden(state, animated: true)
+    }
+  }
 
   public override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return CGFloat.min

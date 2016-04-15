@@ -80,13 +80,13 @@ public class PrimaryButtonCell : StaticTableViewCell{
   }
   
   func installConstaints(){
-    primaryButtonHeight = primaryButton.pinHeight(50)
-    primaryButtonTrailing =  primaryButton.pinTrailing(dp2dp(42))
-    primaryButtonLeading =  primaryButton.pinLeading(dp2dp(42))
-    buttonTop =  primaryButton.pinTop(50)
+    primaryButtonHeight = primaryButton.pa_height.eq(50).install()
+    primaryButtonTrailing =  primaryButton.pa_trailing.eq(dp2dp(42)).install()
+    primaryButtonLeading =  primaryButton.pa_leading.eq(dp2dp(42)).install()
+    buttonTop =  primaryButton.pa_top.eq(50).install()
     
-    spanButton.pinTrailingEqualWithSibling(primaryButton)
-    spanButton.pinAboveSibling(primaryButton, margin: 8)
+    spanButton.pa_before(primaryButton, offset: 0).install()  // pinTrailingEqualWithSibling(primaryButton)
+    spanButton.pa_above(primaryButton, offset: 8).install() //pinAboveSibling(primaryButton, margin: 8)
     
   }
   

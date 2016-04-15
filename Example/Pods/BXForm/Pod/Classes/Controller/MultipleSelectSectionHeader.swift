@@ -55,9 +55,9 @@ class MultipleSelectSectionHeader : UITableViewCell{
   }
   
   func installConstaints(){
-    selectAllButton.pinCenterY()
-    selectAllButton.pinHeight(32)
-    selectAllButton.pinTrailing(15)
+    selectAllButton.pa_centerY.install()
+    selectAllButton.pa_height.eq(32).install()
+    selectAllButton.pa_trailing.eq(15).install()
     
   }
   

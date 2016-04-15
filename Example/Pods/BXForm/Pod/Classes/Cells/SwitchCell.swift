@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PinAutoLayout
+import PinAuto
 import BXModel
 
 // -SwitchCell:tc
@@ -57,8 +57,8 @@ public class SwitchCell : StaticTableViewCell,BXBindable{
   }
   
   func installConstaints(){
-    toggleSwitch.pinCenterY()
-    toggleSwitch.pinTrailing(15)
+    toggleSwitch.pa_centerY.install()
+    toggleSwitch.pa_trailing.eq(15).install()
     
   }
   

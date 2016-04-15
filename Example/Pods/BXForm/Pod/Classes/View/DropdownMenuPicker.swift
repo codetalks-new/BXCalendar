@@ -161,7 +161,7 @@ public class DropdownMenuPicker: UIView {
       childView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    let tapGesture = UITapGestureRecognizer(target: self, action: "onTabMaskView:")
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DropdownMenuPicker.onTabMaskView(_:)))
     backgroundView.addGestureRecognizer(tapGesture)
     
     installConstraints()

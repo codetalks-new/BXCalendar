@@ -34,7 +34,7 @@ public extension UIImage{
     return bx_roundImage(color, size: size, cornerRadius: cornerRadius)
   }
   
-  public static func bx_roundImage(color:UIColor,size:CGSize=CGSize(width: 16, height: 16),cornerRadius:CGFloat = 8) -> UIImage{
+  public static func bx_roundImage(color:UIColor,size:CGSize=CGSize(width: 32, height: 32),cornerRadius:CGFloat = 4) -> UIImage{
     let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     let ctx = UIGraphicsGetCurrentContext()

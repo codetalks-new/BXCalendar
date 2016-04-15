@@ -35,17 +35,20 @@ public class CheckboxButton: IconButton {
   
   func _commonInit(){
     setTitle(nil, forState: .Normal)
-    addTarget(self, action: "_onTap:", forControlEvents: .TouchUpInside)
+    addTarget(self, action: #selector(CheckboxButton._onTap(_:)), forControlEvents: .TouchUpInside)
     selected = false
   }
   
   @IBAction func _onTap(sender:AnyObject){
     selected = !selected
+    checkedStateChangedCallback?(selected)
   }
   
   public func toggle(){
     selected = !selected
   }
+  
+  public var checkedStateChangedCallback: ( Bool -> Void )?
   
   
 }

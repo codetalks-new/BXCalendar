@@ -5,7 +5,7 @@
 //
 
 import UIKit
-import PinAutoLayout
+import PinAuto
 
 // -IconLabel:v
 // icon[l0,y]:i
@@ -65,13 +65,13 @@ public class IconLabel : UIView{
   func installConstaints(){
     translatesAutoresizingMaskIntoConstraints = false
     
-    iconImageView.pinCenterY()
-    iconLeadingConstraint =  iconImageView.pinLeading(0)
+    iconImageView.pa_centerY.install() //pa_centerY.install()
+    iconLeadingConstraint =  iconImageView.pa_leading.eq(0).install() // pa_leading.eq(0)
     
-    textLabel.pinBottom(0)
-    iconPaddingConstraint = textLabel.pinLeadingToSibling(iconImageView, margin: 6)
-    textLabel.pinTop(0)
-    textLabel.pinTrailing(0)
+    textLabel.pa_bottom.eq(0).install()
+    iconPaddingConstraint =  textLabel.pa_after(iconImageView, offset: 6).install() // textLabel.pinLeadingToSibling(iconImageView, margin: 6)
+    textLabel.pa_top.eq(0).install()
+    textLabel.pa_trailing.eq(0).install()
     
   }
   

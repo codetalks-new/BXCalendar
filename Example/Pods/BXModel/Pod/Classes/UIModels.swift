@@ -9,12 +9,12 @@
 import Foundation
 
 public protocol BXBindable{
-    typealias ModelType
+    associatedtype ModelType
     func bind(item:ModelType)
 }
 
 public protocol BXNibable{
-    typealias CustomViewClass
+    associatedtype CustomViewClass
     static var hasNib:Bool{ get }
     static func nib() -> UINib
     static func instantiate() -> CustomViewClass

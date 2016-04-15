@@ -50,7 +50,7 @@ public class VcodeInputCell : StaticTableViewCell{
   }
   
   public func installConstaints(){
-    inputGroupView.pinEdge()
+    inputGroupView.pac_edge(0)
   }
   
   public func setupAttrs(){

@@ -58,8 +58,8 @@ public class BXCalendarViewController:UIPageViewController,UIPageViewControllerD
     let vc = BXCalendarMonthViewController()
     vc.monthDate = date
     vc.readonly = readonly
-    vc.monthHeaderView.okButton.addTarget(self, action: "onOkButtonPressed:", forControlEvents: .TouchUpInside)
-    vc.monthHeaderView.cancelButton.addTarget(self, action: "onCancelButtonPressed:", forControlEvents: .TouchUpInside)
+    vc.monthHeaderView.okButton.addTarget(self, action: #selector(onOkButtonPressed(_:)), forControlEvents: .TouchUpInside)
+    vc.monthHeaderView.cancelButton.addTarget(self, action: #selector(onCancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
     return vc
   }
   

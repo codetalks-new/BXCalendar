@@ -108,7 +108,7 @@ public class GroupButtonBar:UIView{
     for button in buttons{
       button.removeFromSuperview()
       addSubview(button)
-      button.addTarget(self, action: "onPressedButton:", forControlEvents: .TouchUpInside)
+      button.addTarget(self, action: #selector(GroupButtonBar.onPressedButton(_:)), forControlEvents: .TouchUpInside)
     }
   }
 

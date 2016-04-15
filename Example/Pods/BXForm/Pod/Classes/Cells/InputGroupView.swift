@@ -95,17 +95,17 @@ public class InputGroupView : UIView{
   }
   
   func installConstaints(){
-    textField.pinCenterY()
-    textField.pinLeading(15)
+    textField.pa_centerY.install()
+    textField.pa_leading.eq(15).install()
     
     if showSpanButton{
-      textField.pinTrailingToSibing(spanButton, margin: 4)
+      textField.pa_before(spanButton, offset: 4).install()
       
-      spanButton.pinTrailing(0)
-      spanButton.pinVertical(0)
-      spanButton.pinWidth(115)
+      spanButton.pa_trailing.eq(0).install()
+      spanButton.pac_vertical(0)
+      spanButton.pa_width.eq(115).install()
     }else{
-      textField.pinTrailing(15)
+      textField.pa_trailing.eq(15).install()
     }
     
   }

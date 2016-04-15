@@ -5,7 +5,7 @@
 //
 
 import UIKit
-import PinAutoLayout
+import PinAuto
 import BXiOSUtils
 
 public class DatePickerController: BasePickerController{

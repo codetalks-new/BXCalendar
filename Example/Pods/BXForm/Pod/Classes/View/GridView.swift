@@ -122,14 +122,14 @@ public class GridView:UIView{
       let xConstraint = NSLayoutConstraint(item: childView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier:centerXmultiple * 2, constant: 0)
       addConstraint(xConstraint)
       
-      col++
+      col += 1
       if col < maxColCount{
         centerXmultiple += xMultiple
       }else{
         col = 0
         centerXmultiple = xMultiple * 0.5
         centerYmultiple += yMultiple
-        row++
+        row += 1
       }
       
     }
@@ -169,8 +169,8 @@ public class GridView:UIView{
         startY = startY + childViewHeight
         col = 1
       }
-      col++
-      count++
+      col += 1
+      count += 1
     }while (count < childCount )
    
     CGContextStrokePath(ctx)

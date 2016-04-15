@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class ComplexTableViewAdapter<T,V:StaticTableViewCell where V:BXBindable >:SimpleGenericTableViewAdapter<T,V>{
  

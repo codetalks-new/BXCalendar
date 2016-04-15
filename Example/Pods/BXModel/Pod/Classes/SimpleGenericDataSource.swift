@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol BXDataSourceContainer{
-  typealias ItemType
+  associatedtype ItemType
   func updateItems<S:SequenceType where S.Generator.Element == ItemType>(items:S)
   func appendItems<S:SequenceType where S.Generator.Element == ItemType>(items:S)
   var numberOfItems:Int{ get }
