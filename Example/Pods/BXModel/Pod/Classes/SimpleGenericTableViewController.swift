@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class SimpleGenericTableViewController<T,V:UITableViewCell where V:BXBindable>: UITableViewController{
+open class SimpleGenericTableViewController<T,V:UITableViewCell>: UITableViewController where V:BXBindable{
   var adapter:SimpleGenericTableViewAdapter<T,V>?
  
-  public typealias DidSelectedItemBlock = ( (T,atIndexPath:NSIndexPath) -> Void )
-  public var didSelectedItemBlock: DidSelectedItemBlock?{
+  public typealias DidSelectedItemBlock = ( (T,_ atIndexPath:IndexPath) -> Void )
+  open var didSelectedItemBlock: DidSelectedItemBlock?{
     didSet{
       adapter?.didSelectedItem = didSelectedItemBlock
     }
@@ -21,7 +21,7 @@ public class SimpleGenericTableViewController<T,V:UITableViewCell where V:BXBind
     super.init(style: style)
   }
   
-  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
   
@@ -30,7 +30,7 @@ public class SimpleGenericTableViewController<T,V:UITableViewCell where V:BXBind
   }
   
   
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
     tableView.tableFooterView = UIView()
     tableView.estimatedRowHeight = 88
@@ -52,16 +52,16 @@ public class SimpleGenericTableViewController<T,V:UITableViewCell where V:BXBind
 extension SimpleGenericTableViewController:BXDataSourceContainer{
   public typealias ItemType = T
   
-  public func updateItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  public func updateItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
     _copyItems.removeAll()
-    _copyItems.appendContentsOf(items)
+    _copyItems.append(contentsOf: items)
     if let adapter = adapter{
       adapter.updateItems(items)
     }
   }
   
-  public func appendItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
-    _copyItems.appendContentsOf(items)
+  public func appendItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
+    _copyItems.append(contentsOf: items)
     if let adapter = adapter{
       adapter.appendItems(items)
     }
@@ -73,8 +73,8 @@ extension SimpleGenericTableViewController:BXDataSourceContainer{
 
 // MARK:SimpleGenericTableViewController - Helper
 public extension SimpleGenericTableViewController{
-  public func itemAtIndexPath(indexPath:NSIndexPath) -> T{
-    return _copyItems[indexPath.row]
+  public func itemAtIndexPath(_ indexPath:IndexPath) -> T{
+    return _copyItems[(indexPath as NSIndexPath).row]
   }
   
   public func numberOfRows() -> Int {

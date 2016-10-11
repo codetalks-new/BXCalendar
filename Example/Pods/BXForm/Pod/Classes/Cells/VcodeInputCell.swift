@@ -11,19 +11,19 @@ import BXModel
 import BXiOSUtils
 
 
-public class VcodeInputCell : StaticTableViewCell{
-  public let inputGroupView = InputGroupView(frame:CGRectZero)
+open class VcodeInputCell : StaticTableViewCell{
+  open let inputGroupView = InputGroupView(frame:CGRect.zero)
   
   
   public convenience init() {
-    self.init(style: .Default, reuseIdentifier: "VcodeInputCellCell")
+    self.init(style: .default, reuseIdentifier: "VcodeInputCellCell")
   }
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -38,7 +38,7 @@ public class VcodeInputCell : StaticTableViewCell{
     super.init(coder: aDecoder)
   }
   
-  public func commonInit(){
+  open func commonInit(){
     staticHeight = 44
     for childView in allOutlets{
       contentView.addSubview(childView)
@@ -49,32 +49,32 @@ public class VcodeInputCell : StaticTableViewCell{
     
   }
   
-  public func installConstaints(){
+  open func installConstaints(){
     inputGroupView.pac_edge(0)
   }
   
-  public func setupAttrs(){
-    backgroundColor = .whiteColor()
+  open func setupAttrs(){
+    backgroundColor = .white
     inputGroupView.showSpanButton = true
     inputGroupView.showSpanDivider = true
     vcodeTextField.placeholder = "请输入短信验证码"
     vcodeTextField.textColor = FormColors.primaryTextColor
-    vcodeTextField.font = UIFont.systemFontOfSize(15)
+    vcodeTextField.font = UIFont.systemFont(ofSize: 15)
     
-    sendVcodeButton.setTitle("发送验证码", forState: .Normal)
-    sendVcodeButton.setTitleColor(FormColors.accentColor, forState: .Normal)
-    sendVcodeButton.titleLabel?.font = UIFont.systemFontOfSize(13)
+    sendVcodeButton.setTitle("发送验证码", for: UIControlState())
+    sendVcodeButton.setTitleColor(FormColors.accentColor, for: .normal)
+    sendVcodeButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
   }
   
-  public var sendVcodeButton:UIButton{
+  open var sendVcodeButton:UIButton{
     return inputGroupView.spanButton
   }
   
-  public var vcodeTextField:UITextField{
+  open var vcodeTextField:UITextField{
     return inputGroupView.textField
   }
   
-  public var vcode:String{
+  open var vcode:String{
     return vcodeTextField.text?.trimmed() ?? ""
   }
   

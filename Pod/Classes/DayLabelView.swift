@@ -19,8 +19,8 @@ import BXForm
 //zh[x,bl2@num,b8](f12,cst)
 
 class DayLabelView : UIView  ,BXBindable {
-  let numLabel = UILabel(frame:CGRectZero)
-  let zhLabel = UILabel(frame:CGRectZero)
+  let numLabel = UILabel(frame:CGRect.zero)
+  let zhLabel = UILabel(frame:CGRect.zero)
   
   
   override init(frame: CGRect) {
@@ -28,7 +28,7 @@ class DayLabelView : UIView  ,BXBindable {
     commonInit()
   }
   
-  func bind(item:NSDate){
+  func bind(_ item:Foundation.Date){
     numLabel.text  = item.days.description
     zhLabel.text  = item.chineseDaysString
   }
@@ -68,18 +68,18 @@ class DayLabelView : UIView  ,BXBindable {
   
   func setupAttrs(){
     if #available(iOS 8.2, *) {
-        numLabel.font = UIFont.systemFontOfSize(sdp2dp(15), weight: UIFontWeightMedium)
+        numLabel.font = UIFont.systemFont(ofSize: sdp2dp(15), weight: UIFontWeightMedium)
     } else {
-        numLabel.font = UIFont.systemFontOfSize(sdp2dp(15))
+        numLabel.font = UIFont.systemFont(ofSize: sdp2dp(15))
     }
     numLabel.textColor = FormColors.primaryTextColor
     zhLabel.textColor = FormColors.secondaryTextColor
-    zhLabel.font = UIFont.systemFontOfSize(sdp2dp(12))
+    zhLabel.font = UIFont.systemFont(ofSize: sdp2dp(12))
   }
   
   func updateTextColor(){
-    numLabel.textColor = selected ? .whiteColor(): FormColors.primaryTextColor
-    zhLabel.textColor =  selected ? .whiteColor(): FormColors.secondaryTextColor
+    numLabel.textColor = selected ? .white: FormColors.primaryTextColor
+    zhLabel.textColor =  selected ? .white: FormColors.secondaryTextColor
   }
   
   var selected:Bool = false{

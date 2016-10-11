@@ -23,10 +23,10 @@ public extension UIBezierPath{
     let point7 = CGPoint(x: rect.minX + rect.width * 0.2147, y: rect.minY + rect.height * 0.5927)
     let point8 = CGPoint(x: rect.minX + rect.width * 0.0245, y: rect.minY + rect.height * 0.3455)
     let point9 = CGPoint(x: rect.minX + rect.width * 0.3237, y: rect.minY + rect.height * 0.2573)
-    moveToPoint(startPoint)
+    move(to: startPoint)
     for point in [point1,point2,point3,point4,point5,point6,point7,point8,point9] {
-      addLineToPoint(point)
+      addLine(to: point)
     }
-    closePath()
+    close()
   }
 }

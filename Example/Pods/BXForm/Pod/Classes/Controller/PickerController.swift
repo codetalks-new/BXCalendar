@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class PickerController:BasePickerController{
+open class PickerController:BasePickerController{
   
-  public override var pickerView:UIView{
+  open override var pickerView:UIView{
     return self.picker
   }
   
-  public lazy var picker:UIPickerView = {
-    let picker = UIPickerView(frame: CGRectZero)
+  open lazy var picker:UIPickerView = {
+    let picker = UIPickerView(frame: CGRect.zero)
     return picker
   }()
 }

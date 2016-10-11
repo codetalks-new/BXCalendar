@@ -8,28 +8,28 @@
 
 import UIKit
 
-public class DateManager {
-  public static let sharedManager = DateManager()
-  var selectedDate = Set<Date>()
+open class DateManager {
+  open static let sharedManager = DateManager()
+  var selectedDate = Set<YMDDate>()
   
   
-  public func contains(date:NSDate) -> Bool{
-   return contains(Date(date: date))
+  open func contains(_ date:Foundation.Date) -> Bool{
+   return contains(YMDDate(date: date))
   }
   
-  public func contains(date:Date) -> Bool{
+  open func contains(_ date:YMDDate) -> Bool{
     return selectedDate.contains(date)
   }
   
-  public func add(date:Date){
+  open func add(_ date:YMDDate){
     selectedDate.insert(date)
   }
   
-  public func add(date:NSDate){
-    add(Date(date: date))
+  open func add(_ date:Foundation.Date){
+    add(YMDDate(date: date))
   }
   
-  public func toggleAdd(date:Date){
+  open func toggleAdd(_ date:YMDDate){
     if selectedDate.contains(date){
       selectedDate.remove(date)
     }else{
@@ -37,44 +37,44 @@ public class DateManager {
     }
   }
   
-  public func toggleAdd(date:NSDate){
-    toggleAdd(Date(date: date))
+  open func toggleAdd(_ date:Foundation.Date){
+    toggleAdd(YMDDate(date: date))
   }
   
-  public func remove(date:Date){
+  open func remove(_ date:YMDDate){
     selectedDate.remove(date)
   }
   
-  public func remove(date:NSDate){
-    remove(Date(date: date))
+  open func remove(_ date:Foundation.Date){
+    remove(YMDDate(date: date))
   }
   
-  public func removeAll(){
+  open func removeAll(){
     selectedDate.removeAll()
   }
   
-  public var dateSet:Set<Date>{
+  open var dateSet:Set<YMDDate>{
     return selectedDate
   }
   
-  public var dateList:[NSDate]{
-    var list = [NSDate]()
+  open var dateList:[Date]{
+    var list = [Date]()
     for d in selectedDate{
       list.append(d.date)
     }
     return list
   }
   
-  public var isEmpty:Bool{
+  open var isEmpty:Bool{
     return selectedDate.isEmpty
   }
   
-  public var count:Int{
+  open var count:Int{
     return selectedDate.count
   }
 }
 
-public struct Date{
+public struct YMDDate{
   let year:Int
   let month:Int
   let day:Int
@@ -87,7 +87,7 @@ public struct Date{
   
 }
 
-public extension Date{
+public extension YMDDate{
   public var short_string:String{
     return "\(month)-\(day)"
   }
@@ -96,41 +96,41 @@ public extension Date{
   }
   
   // parse yyyy-MM-dd
-  public static func parse(dateStr: String, format: String = "yyyy-MM-dd") -> Date {
-    let dateFmt = NSDateFormatter()
-    dateFmt.timeZone = NSTimeZone.defaultTimeZone()
+  public static func parse(_ dateStr: String, format: String = "yyyy-MM-dd") -> YMDDate {
+    let dateFmt = DateFormatter()
+    dateFmt.timeZone = TimeZone.current
     dateFmt.dateFormat = format
-    let date =  dateFmt.dateFromString(dateStr)!
-    return Date(date: date)
+    let date =  dateFmt.date(from: dateStr)!
+    return YMDDate(date: date)
   }
 }
 
-extension Date{
-  public init(date:NSDate){
+extension YMDDate{
+  public init(date:Foundation.Date){
     self.year = date.year
     self.month = date.month
     self.day = date.days
   }
 }
 
-extension Date{
-  var date:NSDate{
-    let comps = NSDateComponents()
+extension YMDDate{
+  var date:Foundation.Date{
+    var comps = DateComponents()
     comps.year = year
     comps.month = month
     comps.day = day
-    return calendar.dateFromComponents(comps)!
+    return calendar.date(from: comps)!
   }
 }
 
-extension Date:Equatable{
+extension YMDDate:Equatable{
   
 }
 
-public func ==(lhs:Date,rhs:Date) -> Bool{
+public func ==(lhs:YMDDate,rhs:YMDDate) -> Bool{
   return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
 }
 
-extension Date:Hashable{
+extension YMDDate:Hashable{
   public var hashValue:Int { return year * 1000 + month * 100 + day * 10 }
 }

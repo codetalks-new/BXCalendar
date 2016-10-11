@@ -9,42 +9,42 @@
 
 import UIKit
 
-public class OvalButton:UIButton{
+open class OvalButton:UIButton{
   
-  public lazy var maskLayer : CAShapeLayer = { [unowned self] in
+  open lazy var maskLayer : CAShapeLayer = { [unowned self] in
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.frame
     self.layer.mask = maskLayer
     return maskLayer
     }()
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     maskLayer.frame = bounds
     updateOutlinePath()
   }
   
-  private func updateOutlinePath(){
+  fileprivate func updateOutlinePath(){
     let path:UIBezierPath
     switch outlineStyle{
-    case .Rounded:
+    case .rounded:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-    case .Oval:
-      path = UIBezierPath(ovalInRect: bounds)
-    case .Semicircle:
+    case .oval:
+      path = UIBezierPath(ovalIn: bounds)
+    case .semicircle:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.height * 0.5)
     }
-    maskLayer.path = path.CGPath
+    maskLayer.path = path.cgPath
   }
   
   
-  public var outlineStyle = BXOutlineStyle.Oval{
+  open var outlineStyle = BXOutlineStyle.oval{
     didSet{
       updateOutlinePath()
     }
   }
   
-  public var cornerRadius:CGFloat = 4.0 {
+  open var cornerRadius:CGFloat = 4.0 {
     didSet{
       updateOutlinePath()
     }

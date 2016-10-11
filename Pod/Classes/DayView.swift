@@ -19,8 +19,8 @@ import BXForm
 //indicator[x,bl4@dayLabel,w8,a1]:v
 
 class DayView : UIView  ,BXBindable {
-  let dayLabelView = DayLabelView(frame:CGRectZero)
-  let indicatorView = UIView(frame:CGRectZero)
+  let dayLabelView = DayLabelView(frame:CGRect.zero)
+  let indicatorView = UIView(frame:CGRect.zero)
   
   
   override init(frame: CGRect) {
@@ -28,7 +28,7 @@ class DayView : UIView  ,BXBindable {
     commonInit()
   }
   
-  func bind(item:NSDate){
+  func bind(_ item:Foundation.Date){
     dayLabelView.bind(item)
   }
   

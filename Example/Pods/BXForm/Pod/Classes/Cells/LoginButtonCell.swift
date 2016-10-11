@@ -16,21 +16,21 @@ import PinAuto
 //reg[at10@login,bl14@login](f15,ctt,text=快速注册):b
 //reset[bf10@login,y@reg](f15,ctt,text=忘记密码):b
 
-public class LoginButtonCell : StaticTableViewCell{
-  public let loginButton = UIButton(type:.System)
-  public let regButton = UIButton(type:.System)
-  public let resetButton = UIButton(type:.System)
+open class LoginButtonCell : StaticTableViewCell{
+  open let loginButton = UIButton(type:.system)
+  open let regButton = UIButton(type:.system)
+  open let resetButton = UIButton(type:.system)
   
   
   public convenience init() {
-    self.init(style: .Default, reuseIdentifier: "LoginButtonCellCell")
+    self.init(style: .default, reuseIdentifier: "LoginButtonCellCell")
   }
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -45,7 +45,7 @@ public class LoginButtonCell : StaticTableViewCell{
     super.init(coder: aDecoder)
   }
   
-  public func commonInit(){
+  open func commonInit(){
     staticHeight = 120
     frame = CGRect(x: 0, y: 0, width: 320, height: staticHeight)
     for childView in allOutlets{
@@ -57,7 +57,7 @@ public class LoginButtonCell : StaticTableViewCell{
     
   }
   
-  public func installConstaints(){
+  open func installConstaints(){
     loginButton.pa_height.eq(50).install()
     loginButton.pa_trailing.eq(10).install()
     loginButton.pa_top.eq(5).install()
@@ -68,15 +68,15 @@ public class LoginButtonCell : StaticTableViewCell{
     resetButton.pa_trailing.to(loginButton).offset(10).install()
   }
   
-  public func setupAttrs(){
-    loginButton.setTitle("登录",forState: .Normal)
-    loginButton.setTitleColor(UIColor.whiteColor(),forState: .Normal)
-    loginButton.titleLabel?.font = UIFont.systemFontOfSize(18)
-    regButton.setTitleColor(FormColors.tertiaryTextColor,forState: .Normal)
-    regButton.setTitle("快速注册",forState: .Normal)
-    regButton.titleLabel?.font = UIFont.systemFontOfSize(15)
-    resetButton.setTitleColor(FormColors.tertiaryTextColor,forState: .Normal)
-    resetButton.setTitle("忘记密码",forState: .Normal)
-    resetButton.titleLabel?.font = UIFont.systemFontOfSize(15)
+  open func setupAttrs(){
+    loginButton.setTitle("登录",for: UIControlState())
+    loginButton.setTitleColor(UIColor.white,for: UIControlState())
+    loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+    regButton.setTitleColor(FormColors.tertiaryTextColor,for: .normal)
+    regButton.setTitle("快速注册",for: UIControlState())
+    regButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    resetButton.setTitleColor(FormColors.tertiaryTextColor,for: .normal)
+    resetButton.setTitle("忘记密码",for: UIControlState())
+    resetButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
   }
 }

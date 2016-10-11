@@ -34,11 +34,11 @@ extension UINavigationController {
   
 }
 
-public class MenuItem:UITabBarItem{
-  public var icon:UIImage?{
+open class MenuItem:UITabBarItem{
+  open var icon:UIImage?{
     return image
   }
-  public var identifier:String = ""
+  open var identifier:String = ""
   
   public init(title :String,icon:UIImage? = nil){
     super.init()
@@ -52,8 +52,8 @@ public class MenuItem:UITabBarItem{
   
 }
 
-public class MenuItemPickerAdapter: NSObject, UITableViewDataSource,UITableViewDelegate{
-  public let dropdownMenu:DropdownMenuPicker
+open class MenuItemPickerAdapter: NSObject, UITableViewDataSource,UITableViewDelegate{
+  open let dropdownMenu:DropdownMenuPicker
   public  init(dropdownMenu:DropdownMenuPicker){
     self.dropdownMenu = dropdownMenu
   }
@@ -62,25 +62,25 @@ public class MenuItemPickerAdapter: NSObject, UITableViewDataSource,UITableViewD
   
   
   // MARK: Helper
-  func menuAtIndexPath(indexPath:NSIndexPath) -> MenuItem{
-    return dropdownMenu.menus[indexPath.row]
+  func menuAtIndexPath(_ indexPath:IndexPath) -> MenuItem{
+    return dropdownMenu.menus[(indexPath as NSIndexPath).row]
   }
   
   
   // MARK: - UITableViewDataSource
-  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return dropdownMenu.menus.count
   }
   
-  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(menuItemCellIdentifier, forIndexPath: indexPath)
+  open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: menuItemCellIdentifier, for: indexPath)
     let item = menuAtIndexPath(indexPath)
     cell.textLabel?.text = item.title
     cell.imageView?.image = item.icon
     return cell
   }
   
-  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let item = menuAtIndexPath(indexPath)
     dropdownMenu.didSelectItemAtIndexPath?(item, indexPath)
     dropdownMenu.hideMenu()
@@ -89,41 +89,41 @@ public class MenuItemPickerAdapter: NSObject, UITableViewDataSource,UITableViewD
 
 public let menuItemCellIdentifier = "_bx_menu_item_cell"
 
-public class MenuItemCell:UITableViewCell{
+open class MenuItemCell:UITableViewCell{
   
   
-  public override func setSelected(selected: Bool, animated: Bool) {
+  open override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
-    accessoryType = selected ? .Checkmark: .None
+    accessoryType = selected ? .checkmark: .none
   }
 }
 
 // MARK: - DropdownMenuPicker
-public class DropdownMenuPicker: UIView {
+open class DropdownMenuPicker: UIView {
   
-  public var menus = [MenuItem]()
+  open var menus = [MenuItem]()
   
   // handlers
-  public var didSelectItemAtIndexPath: ((MenuItem, NSIndexPath) -> Void)?
+  open var didSelectItemAtIndexPath: ((MenuItem, IndexPath) -> Void)?
   
   // configuration
-  public var animationDuration: NSTimeInterval = 0.3
-  public var maskBackgroundColor: UIColor = .blackColor()
-  public var maskBackgroundOpacity: CGFloat = 0.45
-  public var cellBackgroundColor: UIColor = .whiteColor()
-  public var cellSeparatorColor: UIColor = .blackColor()
+  open var animationDuration: TimeInterval = 0.3
+  open var maskBackgroundColor: UIColor = .black
+  open var maskBackgroundOpacity: CGFloat = 0.45
+  open var cellBackgroundColor: UIColor = .white
+  open var cellSeparatorColor: UIColor = .black
   
-  private weak var navigationController: UINavigationController?
+  fileprivate weak var navigationController: UINavigationController?
   
-  public let backgroundView = UIView()
-  public let tableView = UITableView(frame:CGRectZero,style:.Plain)
-  public let separatorView = UIView()
+  open let backgroundView = UIView()
+  open let tableView = UITableView(frame:CGRect.zero,style:.plain)
+  open let separatorView = UIView()
   
-  private var tableViewTopConstraint = NSLayoutConstraint()
-  private var tableViewHeight: CGFloat = 44
+  fileprivate var tableViewTopConstraint = NSLayoutConstraint()
+  fileprivate var tableViewHeight: CGFloat = 44
   
   public init(menus: [MenuItem]) {
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
     self.menus = menus
     adapter = MenuItemPickerAdapter(dropdownMenu: self)
     commonInit()
@@ -133,14 +133,14 @@ public class DropdownMenuPicker: UIView {
       fatalError("init(coder:) has not been implemented")
   }
   
-  private var adapter: MenuItemPickerAdapter!
+  fileprivate var adapter: MenuItemPickerAdapter!
   
   var allOutlets:[UIView]{
     return [backgroundView,separatorView,tableView]
   }
   
-  override public func willMoveToSuperview(newSuperview: UIView?) {
-    super.willMoveToSuperview(newSuperview)
+  override open func willMove(toSuperview newSuperview: UIView?) {
+    super.willMove(toSuperview: newSuperview)
     if let navigationController = navigationController {
       var frame = navigationController.view.bounds
       frame.origin.y = navigationController.navigationBar.frame.maxY
@@ -150,11 +150,11 @@ public class DropdownMenuPicker: UIView {
   }
   
   func commonInit(){
-    tableView.registerClass(MenuItemCell.self, forCellReuseIdentifier: menuItemCellIdentifier)
+    tableView.register(MenuItemCell.self, forCellReuseIdentifier: menuItemCellIdentifier)
     
-    self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+    self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.clipsToBounds = true
-    self.hidden = true
+    self.isHidden = true
     
     for childView in allOutlets{
       addSubview(childView)
@@ -189,11 +189,11 @@ public class DropdownMenuPicker: UIView {
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 44
     tableView.tableFooterView = UIView()
-    tableView.backgroundColor = .clearColor()
+    tableView.backgroundColor = .clear
     
   }
   
-  @IBAction func onTabMaskView(sender:AnyObject){
+  @IBAction func onTabMaskView(_ sender:AnyObject){
     hideMenu()
   }
   
@@ -203,13 +203,13 @@ public class DropdownMenuPicker: UIView {
     separatorView.backgroundColor = cellSeparatorColor
   }
   
-  public func showMenu() {
+  open func showMenu() {
     preshow()
     
     self.tableView.frame.origin.y = -self.frame.height
     backgroundView.alpha = 0
-    self.hidden = false
-    UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.6, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+    self.isHidden = false
+    UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.6, options: UIViewAnimationOptions(), animations: {
       self.tableViewTopConstraint.constant = 0
       self.backgroundView.alpha = self.maskBackgroundOpacity
       self.setNeedsUpdateConstraints()
@@ -217,20 +217,20 @@ public class DropdownMenuPicker: UIView {
       }, completion: nil)
   }
   
-  public func hideMenu() {
-    UIView.animateWithDuration(animationDuration, animations: {
+  open func hideMenu() {
+    UIView.animate(withDuration: animationDuration, animations: {
       self.tableViewTopConstraint.constant = -self.tableViewHeight
       self.setNeedsUpdateConstraints()
       self.backgroundView.alpha = 0
       self.layoutIfNeeded()
       }, completion: { _ in
         NSLog("hideMenu Completed")
-        self.hidden = true
+        self.isHidden = true
     })
   }
   
-  public func toggleMenu() {
-    if self.hidden {
+  open func toggleMenu() {
+    if self.isHidden {
       showMenu()
     } else {
       hideMenu()

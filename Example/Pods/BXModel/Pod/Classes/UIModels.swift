@@ -10,7 +10,7 @@ import Foundation
 
 public protocol BXBindable{
     associatedtype ModelType
-    func bind(item:ModelType)
+    func bind(_ item:ModelType)
 }
 
 public protocol BXNibable{
@@ -25,19 +25,19 @@ extension UIView:BXNibable{
   public typealias CustomViewClass = UIView
     public static var hasNib:Bool{
         let name = simpleClassName(self)
-        let bundle = NSBundle(forClass: self)
-        let path = bundle.pathForResource(name, ofType: "nib")
+        let bundle = Bundle(for: self)
+        let path = bundle.path(forResource: name, ofType: "nib")
         return path != nil
     }
     
     public static func nib() -> UINib{
         let name = simpleClassName(self)
-        return UINib(nibName: name, bundle: NSBundle(forClass: self))
+        return UINib(nibName: name, bundle: Bundle(for: self))
     }
   
   
     public static func instantiate() -> CustomViewClass{
-        return nib().instantiateWithOwner(self, options: nil).first as! CustomViewClass
+        return nib().instantiate(withOwner: self, options: nil).first as! CustomViewClass
     }
 }
 

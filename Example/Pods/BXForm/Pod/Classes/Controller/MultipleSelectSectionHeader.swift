@@ -16,11 +16,11 @@ import BXModel
 // selectAll[h36,y,r15]:b
 
 class MultipleSelectSectionHeader : UITableViewCell{
-  let selectAllButton = CheckboxButton(type:.Custom)
+  let selectAllButton = CheckboxButton(type:.custom)
   
   
   convenience init() {
-    self.init(style: .Default, reuseIdentifier: "MultipleSelectSectionHeaderCell")
+    self.init(style: .default, reuseIdentifier: "MultipleSelectSectionHeaderCell")
   }
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -66,7 +66,7 @@ class MultipleSelectSectionHeader : UITableViewCell{
   }
   func toggleSelectAll(){
     selectAllButton.toggle()
-    let title = selectAllButton.selected ? "全不选":  "全选"
-    selectAllButton.setTitle(title, forState: .Normal)
+    let title = selectAllButton.isSelected ? "全不选":  "全选"
+    selectAllButton.setTitle(title, for: UIControlState())
   }
 }

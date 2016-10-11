@@ -8,53 +8,58 @@
 
 import Foundation
 
-public class StaticTableViewDataSource:NSObject,UITableViewDataSource,BXDataSourceContainer{
-  public private(set) var cells:[UITableViewCell] = []
+open class StaticTableViewDataSource:NSObject,UITableViewDataSource,BXDataSourceContainer{
+  open fileprivate(set) var cells:[UITableViewCell] = []
   public typealias ItemType = UITableViewCell
-  public var section = 0
+  open var section = 0
+  
+  open var configureCellBlock:((UITableViewCell) -> Void)?
+  
   public init(cells:[UITableViewCell] = []){
     self.cells = cells
   }
   
   
   
-  public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  open func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  public func cellAtIndexPath(indexPath:NSIndexPath) -> UITableViewCell{
-    return self.cells[indexPath.row]
+  open func cellAtIndexPath(_ indexPath:IndexPath) -> UITableViewCell{
+    return self.cells[(indexPath as NSIndexPath).row]
   }
  
-  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.cells.count
   }
   
-  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-    return cells[indexPath.row]
+  open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    let cell = cellAtIndexPath(indexPath)
+    self.configureCellBlock?(cell)
+    return cell
   }
   
-  public func append(cell:UITableViewCell){
+  open func append(_ cell:UITableViewCell){
     if !cells.contains(cell){
       self.cells.append(cell)
     }
   }
   
-  public func appendContentsOf(cells:[UITableViewCell]){
+  open func appendContentsOf(_ cells:[UITableViewCell]){
     for cell in cells{
         append(cell)
     }
   }
  
   
-  public func updateItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  open func updateItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
    self.cells.removeAll()
-    self.cells.appendContentsOf(items)
+    self.cells.append(contentsOf: items)
   }
   
-  public func appendItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
-    self.cells.appendContentsOf(items)
+  open func appendItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
+    self.cells.append(contentsOf: items)
   }
-  public var numberOfItems:Int{ return cells.count }
+  open var numberOfItems:Int{ return cells.count }
   
 }

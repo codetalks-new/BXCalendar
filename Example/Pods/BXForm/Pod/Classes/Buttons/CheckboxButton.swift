@@ -7,19 +7,19 @@
 
 import UIKit
 
-public class CheckboxButton: IconButton {
-  public var checkedImage :UIImage?{
+open class CheckboxButton: IconButton {
+  open var checkedImage :UIImage?{
     set{
-      setImage(newValue, forState: .Selected)
+      setImage(newValue, for: .selected)
     }get{
-      return imageForState(.Selected)
+      return image(for: .selected)
     }
   }
-  public var uncheckedImage:UIImage?{
+  open var uncheckedImage:UIImage?{
     set{
-      setImage(newValue, forState: .Normal)
+      setImage(newValue, for: UIControlState())
     }get{
-      return imageForState(.Normal)
+      return image(for: UIControlState())
     }
   }
   
@@ -34,21 +34,21 @@ public class CheckboxButton: IconButton {
   }
   
   func _commonInit(){
-    setTitle(nil, forState: .Normal)
-    addTarget(self, action: #selector(CheckboxButton._onTap(_:)), forControlEvents: .TouchUpInside)
-    selected = false
+    setTitle(nil, for: UIControlState())
+    addTarget(self, action: #selector(CheckboxButton._onTap(_:)), for: .touchUpInside)
+    isSelected = false
   }
   
-  @IBAction func _onTap(sender:AnyObject){
-    selected = !selected
-    checkedStateChangedCallback?(selected)
+  @IBAction func _onTap(_ sender:AnyObject){
+    isSelected = !isSelected
+    checkedStateChangedCallback?(isSelected)
   }
   
-  public func toggle(){
-    selected = !selected
+  open func toggle(){
+    isSelected = !isSelected
   }
   
-  public var checkedStateChangedCallback: ( Bool -> Void )?
+  open var checkedStateChangedCallback: ( (Bool) -> Void )?
   
   
 }

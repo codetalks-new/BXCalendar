@@ -8,49 +8,50 @@
 
 import UIKit
 
-public class OvalLabel:UILabel{
-  public var horizontalPadding:CGFloat = 4
+open class OvalLabel:UILabel{
+  open var horizontalPadding:CGFloat = 4
+  open var verticalPadding:CGFloat = 4
   
-  public var outlineStyle = BXOutlineStyle.Oval{
+  open var outlineStyle = BXOutlineStyle.oval{
     didSet{
       updateOvalPath()
     }
   }
   
-  public var cornerRadius:CGFloat = 4.0 {
+  open var cornerRadius:CGFloat = 4.0 {
     didSet{
       updateOvalPath()
     }
   }
   
-  public lazy var maskLayer : CAShapeLayer = { [unowned self] in
+  open lazy var maskLayer : CAShapeLayer = { [unowned self] in
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.frame
     self.layer.mask = maskLayer
     return maskLayer
     }()
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     maskLayer.frame = bounds
     updateOvalPath()
   }
   
-  private func updateOvalPath(){
+  fileprivate func updateOvalPath(){
     let path:UIBezierPath
     switch outlineStyle{
-    case .Rounded:
+    case .rounded:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-    case .Oval:
-      path = UIBezierPath(ovalInRect: bounds)
-    case .Semicircle:
+    case .oval:
+      path = UIBezierPath(ovalIn: bounds)
+    case .semicircle:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.height * 0.5)
     }
-    maskLayer.path = path.CGPath
+    maskLayer.path = path.cgPath
   }
   
-  public override func intrinsicContentSize() -> CGSize {
-    let size = super.intrinsicContentSize()
-    return CGSize(width: size.width + horizontalPadding, height: size.height + horizontalPadding)
+  open override var intrinsicContentSize : CGSize {
+    let size = super.intrinsicContentSize
+    return CGSize(width: size.width + horizontalPadding * 2, height: size.height + verticalPadding * 2)
   }
 }

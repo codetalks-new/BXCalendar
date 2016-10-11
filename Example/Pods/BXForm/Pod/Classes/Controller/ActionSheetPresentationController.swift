@@ -9,33 +9,28 @@
 import UIKit
 
 
-public class ActionSheetPresentationController:UIPresentationController{
+open class ActionSheetPresentationController:UIPresentationController{
   lazy var dimmingView : UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
     view.alpha  = 0.0
-    view.userInteractionEnabled = true
+    view.isUserInteractionEnabled = true
     view.tag = 1024
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ActionSheetPresentationController.dismiss)))
     return view
   }()
   
   func dismiss(){
-    presentedViewController.dismissViewControllerAnimated(true, completion: nil)
+    presentedViewController.dismiss(animated: true, completion: nil)
   }
   
-  public override func frameOfPresentedViewInContainerView() -> CGRect {
+  open override var frameOfPresentedViewInContainerView : CGRect {
     let bounds = containerView!.bounds
     
-    return bounds.divide(presentedViewController.preferredContentSize.height, fromEdge: CGRectEdge.MaxYEdge).slice
+    return bounds.divided(atDistance: presentedViewController.preferredContentSize.height, from: CGRectEdge.maxYEdge).slice
   }
   
-  public override init(presentedViewController: UIViewController, presentingViewController: UIViewController) {
-    super.init(presentedViewController: presentedViewController, presentingViewController: presentingViewController)
-    
-  }
-  
-  public override func presentationTransitionWillBegin() {
+  open override func presentationTransitionWillBegin() {
     let containerView = self.containerView!
     let presentedVC = self.presentedViewController
 //    let _ = self.presentingViewController
@@ -43,11 +38,11 @@ public class ActionSheetPresentationController:UIPresentationController{
     dimmingView.frame = containerView.bounds
     dimmingView.alpha = 0.0
     // Insert the dimming view below everything
-    containerView.insertSubview(dimmingView, atIndex: 0)
+    containerView.insertSubview(dimmingView, at: 0)
     
     // Set up the animations for fading in the dimming view.
-    if let coordinator = presentedVC.transitionCoordinator(){
-      coordinator.animateAlongsideTransition({ (ctx) -> Void in
+    if let coordinator = presentedVC.transitionCoordinator{
+      coordinator.animate(alongsideTransition: { (ctx) -> Void in
         // Fade ind
         self.dimmingView.alpha = 1.0
         }, completion: { (ctx) -> Void in
@@ -59,17 +54,17 @@ public class ActionSheetPresentationController:UIPresentationController{
     
   }
   
-  public override func presentationTransitionDidEnd(completed: Bool) {
+  open override func presentationTransitionDidEnd(_ completed: Bool) {
     // If the presentation was canceld, remove the dimming view.
     if !completed{
       self.dimmingView.removeFromSuperview()
     }
   }
   
-  public override func dismissalTransitionWillBegin() {
+  open override func dismissalTransitionWillBegin() {
     // Fade the dimming view back out
-    if let coordinator = presentedViewController.transitionCoordinator(){
-      coordinator.animateAlongsideTransition({ (ctx) -> Void in
+    if let coordinator = presentedViewController.transitionCoordinator{
+      coordinator.animate(alongsideTransition: { (ctx) -> Void in
         self.dimmingView.alpha = 0.0
         }, completion: nil)
       
@@ -78,7 +73,7 @@ public class ActionSheetPresentationController:UIPresentationController{
     }
   }
   
-  public override func dismissalTransitionDidEnd(completed: Bool) {
+  open override func dismissalTransitionDidEnd(_ completed: Bool) {
     // If the dismissal was successful, remove the dimming view
     if completed{
       self.dimmingView.removeFromSuperview()

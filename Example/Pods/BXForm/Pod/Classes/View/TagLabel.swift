@@ -18,22 +18,22 @@ import Foundation
 
 import UIKit
 
-public class TagLabel:UILabel{
-  public var horizontalPadding:CGFloat = 4
+open class TagLabel:UILabel{
+  open var horizontalPadding:CGFloat = 4
   
-  public var outlineStyle = BXOutlineStyle.Oval{
+  open var outlineStyle = BXOutlineStyle.oval{
     didSet{
       updateOvalPath()
     }
   }
   
-  public var tagColor:UIColor = UIColor.grayColor(){
+  open var tagColor:UIColor = UIColor.gray{
     didSet{
       updateOvalPath()
     }
   }
   
-  public var cornerRadius:CGFloat = 4.0 {
+  open var cornerRadius:CGFloat = 4.0 {
     didSet{
       updateOvalPath()
     }
@@ -42,36 +42,36 @@ public class TagLabel:UILabel{
   lazy var maskLayer : CAShapeLayer = { [unowned self] in
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.frame
-    self.layer.insertSublayer(maskLayer,atIndex:0)
+    self.layer.insertSublayer(maskLayer,at:0)
     return maskLayer
     }()
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     maskLayer.frame = bounds
     updateOvalPath()
   }
   
-  private func updateOvalPath(){
+  fileprivate func updateOvalPath(){
     if bounds.size.width < 1{
       return
     }
     var radius:CGFloat
     switch outlineStyle{
-    case .Rounded:
+    case .rounded:
       radius = cornerRadius
-    case .Oval:
+    case .oval:
       radius = bounds.width * 0.5
-    case .Semicircle:
+    case .semicircle:
       radius = bounds.width * 0.5
     }
     
     let image = UIImage.bx_roundImage(tagColor, size: bounds.size, cornerRadius: radius)
-    maskLayer.contents = image.CGImage
+    maskLayer.contents = image.cgImage
   }
   
-  public override func intrinsicContentSize() -> CGSize {
-    let size = super.intrinsicContentSize()
+  open override var intrinsicContentSize : CGSize {
+    let size = super.intrinsicContentSize
     return CGSize(width: size.width + horizontalPadding, height: size.height + horizontalPadding)
   }
 }

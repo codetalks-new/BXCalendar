@@ -17,7 +17,7 @@ import BXModel
 
 // -RadioGroup:c
 
-class RadioGroup<T:BXRadioItemAware where T:Equatable> : UICollectionView{
+class RadioGroup<T:BXRadioItemAware> : UICollectionView where T:Equatable{
   
   let flowLayout : UICollectionViewFlowLayout = {
     let layout = UICollectionViewFlowLayout()
@@ -42,15 +42,15 @@ class RadioGroup<T:BXRadioItemAware where T:Equatable> : UICollectionView{
     commonInit()
   }
   
-  func bind<S:SequenceType where S.Generator.Element == T>(items:S){
+  func bind<S:Sequence>(_ items:S) where S.Iterator.Element == T{
     adapter.updateItems(items)
   }
   
-  func selectItem(item:T){
+  func selectItem(_ item:T){
     if let index = adapter.indexOfItem(item){
-      let indexPath = NSIndexPath(forItem: index, inSection: 0)
+      let indexPath = IndexPath(item: index, section: 0)
       selectedIndexPath = indexPath
-      selectItemAtIndexPath(indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
+      selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.centeredHorizontally)
     }
   }
   
@@ -82,10 +82,10 @@ class RadioGroup<T:BXRadioItemAware where T:Equatable> : UICollectionView{
   }
   
   func setupAttrs(){
-    backgroundColor = .clearColor()
+    backgroundColor = .clear
   }
  
-  var selectedIndexPath:NSIndexPath?
+  var selectedIndexPath:IndexPath?
   var selectedItem:T?{
     if let path = selectedIndexPath{
       return adapter.itemAtIndexPath(path)
@@ -94,7 +94,7 @@ class RadioGroup<T:BXRadioItemAware where T:Equatable> : UICollectionView{
   }
 
   // UICollectionViewDelegate
-  func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
     selectedIndexPath = indexPath
   }
 }

@@ -10,6 +10,6 @@ import UIKit
 
 public extension UIDevice{
   public func bx_isSimulator() -> Bool{
-    return self.model.containsString("Simulator")
+    return self.model.contains("Simulator")
   }
 }

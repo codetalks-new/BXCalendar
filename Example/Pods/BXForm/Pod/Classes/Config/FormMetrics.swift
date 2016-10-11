@@ -12,5 +12,8 @@ public struct FormMetrics{
   public static var cornerRadius : CGFloat = 4.0
   public static var iconPadding : CGFloat = 8.0
   public static var designBaseWidth :CGFloat = 375 // 一般以iPhone 6 来设计，其宽度为 750
+  public static var primaryFontSize : CGFloat = 15
+  public static var secondaryFontSize : CGFloat = 13
+  public static var tertiaryFontSize : CGFloat = 11
 }
 

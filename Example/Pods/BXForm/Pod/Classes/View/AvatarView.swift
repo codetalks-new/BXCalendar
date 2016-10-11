@@ -9,21 +9,21 @@
 import UIKit
 
 
-public class AvatarView:UIView{
+open class AvatarView:UIView{
  
-  public lazy var avatarImageView: OvalImageView = {
-    let view = OvalImageView(frame: CGRectZero)
+  open lazy var avatarImageView: OvalImageView = {
+    let view = OvalImageView(frame: CGRect.zero)
     self.addSubview(view)
     return view
   }()
   
-  public var borderWidth:CGFloat = 2.0{
+  open var borderWidth:CGFloat = 2.0{
     didSet{
       updateBorderStyle()
     }
   }
   
-  public var borderColor:UIColor=UIColor(white: 1.0, alpha: 0.45){
+  open var borderColor:UIColor=UIColor(white: 1.0, alpha: 0.45){
     didSet{
       updateBorderStyle()
     }
@@ -31,13 +31,13 @@ public class AvatarView:UIView{
   
   
   
-  public func updateBorderStyle(){
+  open func updateBorderStyle(){
     layer.borderWidth = borderWidth
-    layer.borderColor = borderColor.CGColor
+    layer.borderColor = borderColor.cgColor
   }
   
   
-  override public func layoutSubviews() {
+  override open func layoutSubviews() {
     super.layoutSubviews()
     layer.cornerRadius = bounds.width * 0.5
     avatarImageView.frame = bounds.insetBy(dx: borderWidth, dy: borderWidth)

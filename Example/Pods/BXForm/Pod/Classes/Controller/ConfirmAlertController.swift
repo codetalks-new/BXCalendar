@@ -7,21 +7,21 @@
 
 import UIKit
 
-public class ConfirmAlertController: UIAlertController {
+open class ConfirmAlertController: UIAlertController {
 
-  public var onConfirmCallback : ( (Bool) -> Void )?
-  public var cancelButtonTitle:String = "取消"
-  public var okButtonTitle:String = "确定"
-  public var shouldShowCancelButton = true
+  open var onConfirmCallback : ( (Bool) -> Void )?
+  open var cancelButtonTitle:String = "取消"
+  open var okButtonTitle:String = "确定"
+  open var shouldShowCancelButton = true
   
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowCancelButton{
-          addAction(UIAlertAction(title: cancelButtonTitle, style: .Cancel){ _ in
+          addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel){ _ in
                   self.onConfirmCallback?(false)
           })
         }
-        addAction(UIAlertAction(title: okButtonTitle, style: .Default){ _ in
+        addAction(UIAlertAction(title: okButtonTitle, style: .default){ _ in
                 self.onConfirmCallback?(true)
         })
     }

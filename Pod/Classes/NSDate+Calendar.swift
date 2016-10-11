@@ -8,14 +8,14 @@
 
 import Foundation
 
-let calendar = NSCalendar.currentCalendar()
+let calendar = Calendar.current
 
-let chineseCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierChinese)!
+let chineseCalendar = Calendar(identifier: Calendar.Identifier.chinese)
 
-public extension NSDate{
+public extension Foundation.Date{
  
   var chineseDays:Int{
-    return chineseCalendar.component(NSCalendarUnit.Day, fromDate: self)
+    return (chineseCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self)
   }
   
   var chineseDaysString:String{
@@ -23,13 +23,13 @@ public extension NSDate{
   }
 }
 
-public extension NSDate{
-  var nextMonthDate:NSDate{
-    return calendar.dateByAddingUnit(.Month, value: 1, toDate: self, options: [])!
+public extension Foundation.Date{
+  var nextMonthDate:Foundation.Date{
+    return (calendar as NSCalendar).date(byAdding: .month, value: 1, to: self, options: [])!
   }
   
-  var prevMonthDate:NSDate{
-    return calendar.dateByAddingUnit(.Month, value: -1, toDate: self, options: [])!
+  var prevMonthDate:Foundation.Date{
+    return (calendar as NSCalendar).date(byAdding: .month, value: -1, to: self, options: [])!
   }
 }
 

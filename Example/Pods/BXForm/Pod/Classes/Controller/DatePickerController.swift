@@ -8,29 +8,29 @@ import UIKit
 import PinAuto
 import BXiOSUtils
 
-public class DatePickerController: BasePickerController{
+open class DatePickerController: BasePickerController{
  
-  public override var pickerView:UIView {
+  open override var pickerView:UIView {
     return datePicker
   }
   
-  public lazy var datePicker:UIDatePicker = {
-    let picker = UIDatePicker(frame:CGRectZero)
-    let today = NSDate()
-    let startDate = NSDate(timeIntervalSinceReferenceDate: 0)
-    picker.datePickerMode = .Date
+  open lazy var datePicker:UIDatePicker = {
+    let picker = UIDatePicker(frame:CGRect.zero)
+    let today = Date()
+    let startDate = Date(timeIntervalSinceReferenceDate: 0)
+    picker.datePickerMode = .date
     picker.minimumDate = startDate
     picker.maximumDate = today
     return picker
   }()
   
-  public var  pickDoneHandler:(NSDate -> Void)?
+  open var  pickDoneHandler:((Date) -> Void)?
   
-  override public func onPickDone(){
+  override open func onPickDone(){
     self.pickDoneHandler?(date)
   }
   
-  public var date:NSDate{
+  open var date:Date{
     get{
       return datePicker.date
     }set{

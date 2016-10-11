@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class StaticTableViewCell:UITableViewCell {
-  public var staticHeight:CGFloat = 44
-  public var removeSeparator:Bool = false
-  public var removeSeparatorInset:Bool = false
-  public var shouldHighlight:Bool = true
+open class StaticTableViewCell:UITableViewCell {
+  open var staticHeight:CGFloat = 44
+  open var removeSeparator:Bool = false
+  open var removeSeparatorInset:Bool = false
+  open var shouldHighlight:Bool = true
   
   
   
-  public override var bx_height:CGFloat{ return staticHeight }
-  public override var bx_shouldHighlight:Bool{ return shouldHighlight }
+  open override var bx_height:CGFloat{ return staticHeight }
+  open override var bx_shouldHighlight:Bool{ return shouldHighlight }
 }

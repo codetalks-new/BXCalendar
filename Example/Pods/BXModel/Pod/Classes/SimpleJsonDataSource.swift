@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class SimpleJsonDataSource<T>:SimpleGenericDataSource<JSON>{
+open class SimpleJsonDataSource<T>:SimpleGenericDataSource<JSON>{
     public init(json:JSON){
         var list = [JSON]()
         for (_,subJson):(String,JSON) in json{

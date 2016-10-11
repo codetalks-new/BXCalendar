@@ -9,11 +9,11 @@
 import UIKit
 import BXModel
 
-public class RadioButtonCell : UICollectionViewCell,BXBindable,UICollectionViewDelegate{
-  public let radioButton = CheckboxButton(type:.Custom)
-  override public var selected:Bool{
+open class RadioButtonCell : UICollectionViewCell,BXBindable,UICollectionViewDelegate{
+  open let radioButton = CheckboxButton(type:.custom)
+  override open var isSelected:Bool{
     didSet{
-      radioButton.selected = selected
+      radioButton.isSelected = isSelected
     }
   }
   
@@ -22,11 +22,11 @@ public class RadioButtonCell : UICollectionViewCell,BXBindable,UICollectionViewD
     commonInit()
   }
   
-  public func bind(item:BXRadioItemAware){
-    radioButton.setTitle(item.bx_title, forState: .Normal)
+  open func bind(_ item:BXRadioItemAware){
+    radioButton.setTitle(item.bx_title, for: UIControlState())
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -57,9 +57,9 @@ public class RadioButtonCell : UICollectionViewCell,BXBindable,UICollectionViewD
   }
   
   func setupAttrs(){
-    radioButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-    radioButton.titleLabel?.font = UIFont.systemFontOfSize(14)
-    radioButton.userInteractionEnabled = false
+    radioButton.setTitleColor(UIColor.white, for: UIControlState())
+    radioButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+    radioButton.isUserInteractionEnabled = false
   }
   
 }

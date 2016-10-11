@@ -12,27 +12,27 @@ import SwiftyJSON
 import BXModel
 
 public enum ConfirmButtonBarStyle{
-  case Plain
-  case Bordered
+  case plain
+  case bordered
   
   var isPlain:Bool{
-    return self == .Plain
+    return self == .plain
   }
 }
 
 // -ConfirmButtonBar:v
 // cancel[h34,w102,y,x35](cdt):b;ok[h34,w102,y,x35](cw):b
-public typealias OnCancelHandler = (Void -> Void)
-public typealias OnOkHandler = (Void -> Void)
+public typealias OnCancelHandler = ((Void) -> Void)
+public typealias OnOkHandler = ((Void) -> Void)
 
-public class ConfirmButtonBar : UIView{
-  public let cancelButton = UIButton(type:.System)
-  public let okButton = UIButton(type:.System)
-  public var onCancelHandler:OnCancelHandler?
-  public var onOkHandler:OnOkHandler?
-  var style:ConfirmButtonBarStyle = .Plain
+open class ConfirmButtonBar : UIView{
+  open let cancelButton = UIButton(type:.system)
+  open let okButton = UIButton(type:.system)
+  open var onCancelHandler:OnCancelHandler?
+  open var onOkHandler:OnOkHandler?
+  var style:ConfirmButtonBarStyle = .plain
   public  init(style:ConfirmButtonBarStyle){
-    super.init(frame:CGRectZero)
+    super.init(frame:CGRect.zero)
     self.style = style
     commonInit()
   }
@@ -43,7 +43,7 @@ public class ConfirmButtonBar : UIView{
     commonInit()
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -81,56 +81,56 @@ public class ConfirmButtonBar : UIView{
     cancelButton.pa_centerY.install()
     cancelButton.pa_height.eq(34).install()
     cancelButton.pa_width.eq(102).install()
-    cancelButton.pa_trailing.equalTo(.CenterX, ofView: self).eq(dp2dp(40)).install() //  pinTrailingToCenterX(dp2dp(40))
+    cancelButton.pa_trailing.equalTo(.centerX, ofView: self).eq(dp2dp(40)).install() //  pinTrailingToCenterX(dp2dp(40))
     
     okButton.pa_centerY.install()
     okButton.pa_height.eq(34).install()
     okButton.pa_width.eq(102).install()
-    okButton.pa_leading.eq(dp2dp(40)).equalTo(.CenterX, ofView: self).install()
+    okButton.pa_leading.eq(dp2dp(40)).equalTo(.centerX, ofView: self).install()
     }
     
   }
   
   func setupAttrs(){
-    cancelButton.setTitle("取消", forState: .Normal)
-    okButton.setTitle("确定", forState: .Normal)
+    cancelButton.setTitle("取消", for: UIControlState())
+    okButton.setTitle("确定", for: UIControlState())
 
     
     if style.isPlain{
-      cancelButton.setTitleColor(FormColors.tertiaryTextColor, forState: .Normal)
-      okButton.setTitleColor(UIColor(hex: 0xf23d3d), forState: .Normal)
+      cancelButton.setTitleColor(FormColors.tertiaryTextColor, for: .normal)
+      okButton.setTitleColor(UIColor(hex: 0xf23d3d), for: .normal)
       
       for button in [okButton,cancelButton]{
-        button.titleLabel?.font = UIFont.systemFontOfSize(16)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
       }
     }else{
-      cancelButton.setTitleColor(UIColor.darkTextColor(), forState: .Normal)
-      okButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-      cancelButton.setBackgroundImage(FormButtons.lightGrayImage, forState: .Normal)
-      okButton.setBackgroundImage(FormButtons.primaryImage, forState: .Normal)
+      cancelButton.setTitleColor(UIColor.darkText, for: UIControlState())
+      okButton.setTitleColor(UIColor.white, for: UIControlState())
+      cancelButton.setBackgroundImage(FormButtons.lightGrayImage, for: .normal)
+      okButton.setBackgroundImage(FormButtons.primaryImage, for: .normal)
     }
     
-    cancelButton.addTarget(self, action: #selector(ConfirmButtonBar.onCancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
-    okButton.addTarget(self, action: #selector(ConfirmButtonBar.onOkButtonPressed(_:)), forControlEvents: .TouchUpInside)
+    cancelButton.addTarget(self, action: #selector(ConfirmButtonBar.onCancelButtonPressed(_:)), for: .touchUpInside)
+    okButton.addTarget(self, action: #selector(ConfirmButtonBar.onOkButtonPressed(_:)), for: .touchUpInside)
   }
   
-  @IBAction func onCancelButtonPressed(sender:AnyObject){
+  @IBAction func onCancelButtonPressed(_ sender:AnyObject){
    self.onCancelHandler?()
   }
   
-  @IBAction func onOkButtonPressed(sender:AnyObject){
+  @IBAction func onOkButtonPressed(_ sender:AnyObject){
    self.onOkHandler?()
   }
   
   
   
   
-  public func onCancel(handler:OnCancelHandler?) -> Self{
+  open func onCancel(_ handler:OnCancelHandler?) -> Self{
     self.onCancelHandler = handler
     return self
   }
   
-  public func onOk(handler:OnOkHandler?) -> Self{
+  open func onOk(_ handler:OnOkHandler?) -> Self{
     self.onOkHandler = handler
     return self
   }

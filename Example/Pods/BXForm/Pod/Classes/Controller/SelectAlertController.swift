@@ -6,9 +6,9 @@
 
 import UIKit
 
-public class SelectAlertController<T:CustomStringConvertible>: UIAlertController {
+open class SelectAlertController<T:CustomStringConvertible>: UIAlertController {
     let options:[T]
-    public var onSelectCallback : ( (T) -> Void )?
+    open var onSelectCallback : ( (T) -> Void )?
     
     public init(options:[T]){
         self.options = options
@@ -20,11 +20,11 @@ public class SelectAlertController<T:CustomStringConvertible>: UIAlertController
         super.init(coder: aDecoder)
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
-        addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+        addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         for option in options {
-            let action = UIAlertAction(title: option.description, style: .Default) { [weak self] _ in
+            let action = UIAlertAction(title: option.description, style: .default) { [weak self] _ in
                 self?.onSelectCallback?(option)
             }
             addAction(action)

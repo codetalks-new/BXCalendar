@@ -19,7 +19,7 @@ public protocol BXModel:BXModelAware,BXJSONDeserializable,BXJSONSerializable{
 
 
 public extension BXJSONDeserializable{
-    public static func arrayFrom(json:JSON) -> [Self]{
+    public static func arrayFrom(_ json:JSON) -> [Self]{
         var array = [Self]()
         for (_,subJson):(String,JSON) in json{
             let item = Self(json:subJson)
@@ -31,14 +31,14 @@ public extension BXJSONDeserializable{
 
 
 public extension BXJSONSerializable{
-  public static func arrayFrom(models:[Self]) -> [[String:AnyObject]]{
+  public static func arrayFrom(_ models:[Self]) -> [[String:AnyObject]]{
     return models.map{ $0.toDict () }
   }
 }
 
 public extension NSObject{
    
-    public func bx_modelSetWithJSON(json:JSON){
+    public func bx_modelSetWithJSON(_ json:JSON){
         
     }
     

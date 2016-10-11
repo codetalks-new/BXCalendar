@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension NSDate {
+public extension Date {
   
   // MARK:  NSDate Manipulation
   
@@ -149,8 +149,8 @@ public extension NSDate {
   :param: date NSDate to compare
   :returns: True if self is after the input NSDate, false otherwise
   */
-  public func isAfter(date: NSDate) -> Bool{
-    return (self.compare(date) == NSComparisonResult.OrderedDescending)
+  public func isAfter(_ date: Date) -> Bool{
+    return (self.compare(date) == ComparisonResult.orderedDescending)
   }
   
   /**
@@ -159,8 +159,8 @@ public extension NSDate {
    :param: date NSDate to compare
    :returns: True if self is before the input NSDate, false otherwise
    */
-  public func isBefore(date: NSDate) -> Bool{
-    return (self.compare(date) == NSComparisonResult.OrderedAscending)
+  public func isBefore(_ date: Date) -> Bool{
+    return (self.compare(date) == ComparisonResult.orderedAscending)
   }
   
   
@@ -171,7 +171,7 @@ public extension NSDate {
   */
   public var year : Int {
     get {
-      return getComponent(.Year)
+      return getComponent(.year)
     }
   }
   
@@ -180,7 +180,7 @@ public extension NSDate {
    */
   public var month : Int {
     get {
-      return getComponent(.Month)
+      return getComponent(.month)
     }
   }
   
@@ -189,7 +189,7 @@ public extension NSDate {
    */
   public var weekday : Int {
     get {
-      return getComponent(.Weekday)
+      return getComponent(.weekday)
     }
   }
   
@@ -198,7 +198,7 @@ public extension NSDate {
    */
   public var weekMonth : Int {
     get {
-      return getComponent(.WeekOfMonth)
+      return getComponent(.weekOfMonth)
     }
   }
   
@@ -208,7 +208,7 @@ public extension NSDate {
    */
   public var days : Int {
     get {
-      return getComponent(.Day)
+      return getComponent(.day)
     }
   }
   
@@ -218,7 +218,7 @@ public extension NSDate {
   public var hours : Int {
     
     get {
-      return getComponent(.Hour)
+      return getComponent(.hour)
     }
   }
   
@@ -227,7 +227,7 @@ public extension NSDate {
    */
   public var minutes : Int {
     get {
-      return getComponent(.Minute)
+      return getComponent(.minute)
     }
   }
   
@@ -236,7 +236,7 @@ public extension NSDate {
    */
   public var seconds : Int {
     get {
-      return getComponent(.Second)
+      return getComponent(.second)
     }
   }
   
@@ -247,11 +247,9 @@ public extension NSDate {
    :returns: the value of the component
    */
   
-  public func getComponent (component : NSCalendarUnit) -> Int {
-    let calendar = NSCalendar.currentCalendar()
-    let components = calendar.components(component, fromDate: self)
-    
-    return components.valueForComponent(component)
+  public func getComponent (_ component : Calendar.Component) -> Int {
+    let calendar = Calendar.current
+    return calendar.component(component, from:self)
   }
 }
 
@@ -266,40 +264,40 @@ public extension NSDate {
 //}
 // MARK: Arithmetic
 
-func +(date: NSDate, timeInterval: Int) -> NSDate {
-  return date + NSTimeInterval(timeInterval)
-}
+//func +(date: Date, timeInterval: Int) -> Date {
+//  return date + TimeInterval(timeInterval)
+//}
+//
+//func -(date: Date, timeInterval: Int) -> Date {
+//  return date - TimeInterval(timeInterval)
+//}
 
-func -(date: NSDate, timeInterval: Int) -> NSDate {
-  return date - NSTimeInterval(timeInterval)
-}
+//func +=(date: inout Date, timeInterval: Int) {
+//  date = date + timeInterval
+//}
+//
+//func -=(date: inout Date, timeInterval: Int) {
+//  date = date - timeInterval
+//}
 
-func +=(inout date: NSDate, timeInterval: Int) {
-  date = date + timeInterval
-}
+//func +(date: Date, timeInterval: Double) -> Date {
+//  return date.addingTimeInterval(TimeInterval(timeInterval))
+//}
+//
+//func -(date: Date, timeInterval: Double) -> Date {
+//  return date.addingTimeInterval(TimeInterval(-timeInterval))
+//}
 
-func -=(inout date: NSDate, timeInterval: Int) {
-  date = date - timeInterval
-}
+//func +=(date: inout Date, timeInterval: Double) {
+//  date = date + timeInterval
+//}
+//
+//func -=(date: inout Date, timeInterval: Double) {
+//  date = date - timeInterval
+//}
 
-func +(date: NSDate, timeInterval: Double) -> NSDate {
-  return date.dateByAddingTimeInterval(NSTimeInterval(timeInterval))
-}
-
-func -(date: NSDate, timeInterval: Double) -> NSDate {
-  return date.dateByAddingTimeInterval(NSTimeInterval(-timeInterval))
-}
-
-func +=(inout date: NSDate, timeInterval: Double) {
-  date = date + timeInterval
-}
-
-func -=(inout date: NSDate, timeInterval: Double) {
-  date = date - timeInterval
-}
-
-func -(date: NSDate, otherDate: NSDate) -> NSTimeInterval {
-  return date.timeIntervalSinceDate(otherDate)
+func -(date: Date, otherDate: Date) -> TimeInterval {
+  return date.timeIntervalSince(otherDate)
 }
 
 //extension NSDate: Equatable {
@@ -309,43 +307,43 @@ func -(date: NSDate, otherDate: NSDate) -> NSTimeInterval {
 //  return lhs.compare(rhs) == NSComparisonResult.OrderedSame
 //}
 
-extension NSDate: Comparable {
-}
+//extension Date: Comparable {
+//}
+//
+//public func <(lhs: Date, rhs: Date) -> Bool {
+//  return lhs.compare(rhs) == ComparisonResult.orderedAscending
+//}
 
-public func <(lhs: NSDate, rhs: NSDate) -> Bool {
-  return lhs.compare(rhs) == NSComparisonResult.OrderedAscending
-}
 
 
-
-extension NSDate{
+extension Date{
   public var bx_shortDateString:String{
-    return bx_dateTimeStringWithFormatStyle(.ShortStyle, timeStyle: .NoStyle)
+    return bx_dateTimeStringWithFormatStyle(.short, timeStyle: .none)
   }
   
   public var bx_longDateString:String{
-    return bx_dateTimeStringWithFormatStyle(.MediumStyle, timeStyle: .NoStyle)
+    return bx_dateTimeStringWithFormatStyle(.medium, timeStyle: .none)
   }
   
   public var bx_shortTimeString:String{
-    return bx_dateTimeStringWithFormatStyle(.NoStyle, timeStyle: .ShortStyle)
+    return bx_dateTimeStringWithFormatStyle(.none, timeStyle: .short)
   }
   
   public var bx_dateTimeString:String{
-    return bx_dateTimeStringWithFormatStyle(.MediumStyle, timeStyle: .MediumStyle)
+    return bx_dateTimeStringWithFormatStyle(.medium, timeStyle: .medium)
   }
   
-  public func bx_dateTimeStringWithFormatStyle(dateStyle:NSDateFormatterStyle,timeStyle:NSDateFormatterStyle) -> String{
-    let dateFormatter = NSDateFormatter()
+  public func bx_dateTimeStringWithFormatStyle(_ dateStyle:DateFormatter.Style,timeStyle:DateFormatter.Style) -> String{
+    let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = dateStyle
     dateFormatter.timeStyle = timeStyle
-    return dateFormatter.stringFromDate(self)
+    return dateFormatter.string(from: self)
   }
   
   public var bx_relativeDateTimeString:String{
     let secondsToNow = abs(Int(timeIntervalSinceNow))
-    let now = NSDate()
-    let calendar = NSCalendar.currentCalendar()
+    let now = Date()
+    let calendar = Calendar.current
     switch secondsToNow{
     case 0..<60: return "刚刚"
     case 60..<300:

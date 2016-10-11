@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "BXCalendar"
-  s.version          = "0.1.3"
-  s.summary          = "一个适用于中国国情的日历选择器"
+  s.version          = "1.0.0"
+  s.summary          = "一个适用于中国国情的日历选择器, 支持 Swift 3"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -35,5 +35,5 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  s.dependency 'BXForm'
+  s.dependency 'BXForm', '~>1.0'
 end

@@ -11,6 +11,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+1.X for Swift 3
+0.3 for Swift 2.2
+
 ## Installation
 
 BXForm is available through [CocoaPods](http://cocoapods.org). To install
@@ -19,6 +22,7 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "BXForm"
 ```
+If you are using Swift 2.2  please use latest 0.X version `0.3`
 
 ## Author
 

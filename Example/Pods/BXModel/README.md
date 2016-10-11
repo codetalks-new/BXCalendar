@@ -19,6 +19,8 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "BXModel"
 ```
+If you are using Swift 2.2, please specify the lastest 0.X version.
+like  `pod 'BXModel', '~>0.2.8'`
 
 ## Author
 

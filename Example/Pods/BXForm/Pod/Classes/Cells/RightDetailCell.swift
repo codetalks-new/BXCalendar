@@ -9,13 +9,13 @@
 import Foundation
 import BXModel
 
-public class RightDetailCell:StaticTableViewCell{
+open class RightDetailCell:StaticTableViewCell{
   public convenience init() {
-    self.init(style: .Value1, reuseIdentifier: "rightDetailCell")
+    self.init(style: .value1, reuseIdentifier: "rightDetailCell")
   }
   
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .Value1, reuseIdentifier: reuseIdentifier)
+    super.init(style: .value1, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
 
@@ -23,7 +23,8 @@ public class RightDetailCell:StaticTableViewCell{
     super.init(coder: aDecoder)
   }
   
-  public func commonInit(){
-      accessoryType = .DisclosureIndicator
+  open func commonInit(){
+      accessoryType = .disclosureIndicator
+      textLabel?.textColor = FormColors.primaryTextColor
   }
 }

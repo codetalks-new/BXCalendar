@@ -10,14 +10,14 @@ import UIKit
 import BXForm
 import BXiOSUtils
 
-public class BXCalendarDatePickerController : BXCalendarViewController {
+open class BXCalendarDatePickerController : BXCalendarViewController {
   
   
   public override init(){
     super.init()
     transitioningDelegate = self
-    modalPresentationStyle = .Custom
-    modalTransitionStyle = .CrossDissolve
+    modalPresentationStyle = .custom
+    modalTransitionStyle = .crossDissolve
     preferredContentSize = CGSize(width: screenWidth, height: 390)
   }
   
@@ -28,15 +28,15 @@ public class BXCalendarDatePickerController : BXCalendarViewController {
   
   
   
-  override public func viewDidLayoutSubviews() {
+  override open func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
   }
   
 }
 
 extension BXCalendarDatePickerController:UIViewControllerTransitioningDelegate{
-  public func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-    let presentation = AlertPresentationController(presentedViewController: presented, presentingViewController: presenting)
+  public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    let presentation = AlertPresentationController(presentedViewController: presented, presenting: presenting)
     return presentation
   }
 }

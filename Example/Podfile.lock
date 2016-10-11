@@ -1,16 +1,20 @@
 PODS:
-  - BXCalendar (0.1.3):
-    - BXForm
-  - BXForm (0.2.7):
-    - BXiOSUtils
-    - BXModel
-    - PinAuto
-  - BXiOSUtils (0.1.8)
-  - BXModel (0.2.3):
-    - SwiftyJSON
-  - PinAuto (1.6)
+  - BXCalendar (1.0.0):
+    - BXForm (~> 1.0)
+  - BXForm (1.0.0):
+    - BXiOSUtils (~> 1.0)
+    - BXModel (~> 1.0)
+    - Cent (~> 6.0)
+    - PinAuto (~> 2.0)
+  - BXiOSUtils (1.0.0)
+  - BXModel (1.0.1):
+    - SwiftyJSON (~> 3.1.1)
+  - Cent (6.0.1):
+    - Dollar (~> 6.0.0)
+  - Dollar (6.0.0)
+  - PinAuto (2.0)
   - Reveal-iOS-SDK (1.6.2)
-  - SwiftyJSON (2.3.2)
+  - SwiftyJSON (3.1.1)
 
 DEPENDENCIES:
   - BXCalendar (from `../`)
@@ -21,14 +25,16 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BXCalendar: 536d67be40a92104f20e87027266a3ed20551726
-  BXForm: 280722f03fc76c1f4c692bbadd928846360ea57b
-  BXiOSUtils: c1355f78727837fd9d1d4c6cf1f6ccfca54fe7f7
-  BXModel: 7b107003f758feea4f5634b89869f085e6a015cc
-  PinAuto: 3fea106a06036fedf49928e65a1bced151c02f8a
+  BXCalendar: edbf9ddfcef672f63778b56ca4647dc72c57366f
+  BXForm: 19fbe8429769a9e4924963cbd33ea32980e0012e
+  BXiOSUtils: 7218b6016948a53abe4efe05b845ea94c4da566e
+  BXModel: 3e62bb93e8813bdc614413ec8c5b612971181494
+  Cent: a9a45d7823ec2a60284e21c93afdc3be70db007a
+  Dollar: 6e69123e0901307d67a416dac70aeec56243a6e0
+  PinAuto: c17b09abc2710d60f523f397890bca0572d489e3
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
 PODFILE CHECKSUM: 7fcaaf22b212755b748f31d5825ea233f25ac645
 
-COCOAPODS: 1.0.0.beta.7
+COCOAPODS: 1.1.0.rc.2

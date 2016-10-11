@@ -7,10 +7,10 @@
 //
 
 import Foundation
-public class BXMutipleSectionGenericDataSource<Key:Hashable,T:BXModelAware where Key:StringInterpolationConvertible>:NSObject,UITableViewDataSource,UICollectionViewDataSource{
-  public var reuseIdentifier = "cell"
+open class BXMutipleSectionGenericDataSource<Key:Hashable,T:BXModelAware>:NSObject,UITableViewDataSource,UICollectionViewDataSource{
+  open var reuseIdentifier = "cell"
   var dict:Dictionary<Key,[T]> = [:]
-  public typealias DidSelectedItemBlock = ( (T,atIndexPath:NSIndexPath) -> Void )
+  public typealias DidSelectedItemBlock = ( (T,_ atIndexPath:IndexPath) -> Void )
   
   var sectionKeys:[Key] = []
   var shouldShowSectionHeaderTitle = true
@@ -20,27 +20,27 @@ public class BXMutipleSectionGenericDataSource<Key:Hashable,T:BXModelAware where
     sectionKeys = Array(dict.keys)
   }
   
-  public func itemAtIndexPath(indexPath:NSIndexPath) -> T{
-    let sectionKey = sectionKeys[indexPath.section]
-    return dict[sectionKey]![indexPath.row]
+  open func itemAtIndexPath(_ indexPath:IndexPath) -> T{
+    let sectionKey = sectionKeys[(indexPath as NSIndexPath).section]
+    return dict[sectionKey]![(indexPath as NSIndexPath).row]
   }
   
-  public func rowsOfSection(section:Int) -> Int {
+  open func rowsOfSection(_ section:Int) -> Int {
     let sectionKey = sectionKeys[section]
     return dict[sectionKey]!.count
   }
 //
 //  
   // MARK: UITableViewDataSource
-  public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  open func numberOfSections(in tableView: UITableView) -> Int {
     return sectionKeys.count
   }
 //
-  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return rowsOfSection(section)
   }
   
-  public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     if shouldShowSectionHeaderTitle{
       return "\(self.sectionKeys[section])"
     }else{
@@ -49,41 +49,41 @@ public class BXMutipleSectionGenericDataSource<Key:Hashable,T:BXModelAware where
   }
   
 //
-  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(self.reuseIdentifier, forIndexPath: indexPath)
+  open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: self.reuseIdentifier, for: indexPath)
     configureTableViewCell(cell, atIndexPath: indexPath)
     return cell
   }
 //
 //  // MARK: UICollectionViewDataSource
 //  
-  public final func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+  public final func numberOfSections(in collectionView: UICollectionView) -> Int {
     return sectionKeys.count
   }
 //
-  public final func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+  public final func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
     return rowsOfSection(section)
   }
 //
   // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(self.reuseIdentifier, forIndexPath: indexPath)
+  open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath)
     configureCollectionViewCell(cell, atIndexPath: indexPath)
     return cell
   }
   
   // MARK : Helper
   
-  public func configureCollectionViewCell(cell:UICollectionViewCell,atIndexPath indexPath:NSIndexPath){
+  open func configureCollectionViewCell(_ cell:UICollectionViewCell,atIndexPath indexPath:IndexPath){
     
   }
 //
-  public func configureTableViewCell(cell:UITableViewCell,atIndexPath indexPath:NSIndexPath){
+  open func configureTableViewCell(_ cell:UITableViewCell,atIndexPath indexPath:IndexPath){
     
   }
 //
 //  // MARK: BXDataSourceContainer
-  public func updateDict(dict:Dictionary<Key,[T]>){
+  open func updateDict(_ dict:Dictionary<Key,[T]>){
     self.dict = dict
     self.sectionKeys = Array(dict.keys)
   }

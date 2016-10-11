@@ -9,6 +9,6 @@
 import Foundation
 import BXModel
 
-extension NSDate:BXModelAware{
+extension Foundation.Date:BXModelAware{
   
 }

@@ -21,8 +21,8 @@ import BXForm
 
 class BXCalendarMonthViewController : UIViewController {
   
-  let monthHeaderView = MonthHeaderView(frame:CGRectZero)
-  let weekdayBarView = WeekdayBar(frame:CGRectZero)
+  let monthHeaderView = MonthHeaderView(frame:CGRect.zero)
+  let weekdayBarView = WeekdayBar(frame:CGRect.zero)
   lazy var monthView  :MonthView = {
     return MonthView(date: self.monthDate)
   }()
@@ -31,7 +31,7 @@ class BXCalendarMonthViewController : UIViewController {
     self.init(nibName: nil, bundle: nil)
   }
   // must needed for iOS 8
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
   required init?(coder aDecoder: NSCoder) {
@@ -70,14 +70,14 @@ class BXCalendarMonthViewController : UIViewController {
   }
   override func loadView(){
     super.loadView()
-    self.view.backgroundColor = .whiteColor()
-    monthView.backgroundColor = .whiteColor()
+    self.view.backgroundColor = .white
+    monthView.backgroundColor = .white
     monthHeaderView.backgroundColor = FormColors.accentColor
     commonInit()
   }
   
   
-  var monthDate:NSDate = NSDate()
+  var monthDate:Foundation.Date = Foundation.Date()
   var readonly = false
   
   override func viewDidLoad() {

@@ -28,10 +28,10 @@ import BXForm
 //year[x,bl2@month](f15,cw)
 
 class MonthHeaderView : UIView  ,BXBindable {
-  let cancelButton = UIButton(type:.System)
-  let okButton = UIButton(type:.System)
-  let monthLabel = UILabel(frame:CGRectZero)
-  let yearLabel = UILabel(frame:CGRectZero)
+  let cancelButton = UIButton(type:.system)
+  let okButton = UIButton(type:.system)
+  let monthLabel = UILabel(frame:CGRect.zero)
+  let yearLabel = UILabel(frame:CGRect.zero)
   
   
   override init(frame: CGRect) {
@@ -39,7 +39,7 @@ class MonthHeaderView : UIView  ,BXBindable {
     commonInit()
   }
   
-  func bind(item:NSDate){
+  func bind(_ item:Foundation.Date){
     monthLabel.text  = "\(item.month)月"
     yearLabel.text  = item.year.description
   }
@@ -85,15 +85,15 @@ class MonthHeaderView : UIView  ,BXBindable {
   }
   
   func setupAttrs(){
-    monthLabel.textColor = UIColor.whiteColor()
-    monthLabel.font = UIFont.systemFontOfSize(24)
-    yearLabel.textColor = UIColor.whiteColor()
-    yearLabel.font = UIFont.systemFontOfSize(15)
+    monthLabel.textColor = UIColor.white
+    monthLabel.font = UIFont.systemFont(ofSize: 24)
+    yearLabel.textColor = UIColor.white
+    yearLabel.font = UIFont.systemFont(ofSize: 15)
     
-    cancelButton.setTitle("取消", forState: .Normal)
-    okButton.setTitle("确定", forState: .Normal)
-    cancelButton.setTitleColor(.whiteColor(), forState: .Normal)
-    okButton.setTitleColor(.whiteColor(), forState: .Normal)
+    cancelButton.setTitle("取消", for: UIControlState())
+    okButton.setTitle("确定", for: UIControlState())
+    cancelButton.setTitleColor(.white, for: UIControlState())
+    okButton.setTitleColor(.white, for: UIControlState())
   }
 }
 

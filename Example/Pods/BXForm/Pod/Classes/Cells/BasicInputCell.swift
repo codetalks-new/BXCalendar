@@ -12,19 +12,19 @@ import BXModel
 import BXiOSUtils
 
 
-public class BasicInputCell : StaticTableViewCell{
-  public let textField = UITextField(frame:CGRectZero)
+open class BasicInputCell : StaticTableViewCell{
+  open let textField = UITextField(frame:CGRect.zero)
   
   
   public convenience init() {
-    self.init(style: .Default, reuseIdentifier: "BasicInputCellCell")
+    self.init(style: .default, reuseIdentifier: "BasicInputCellCell")
   }
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -39,7 +39,7 @@ public class BasicInputCell : StaticTableViewCell{
     super.init(coder: aDecoder)
   }
   
-  public func commonInit(){
+  open func commonInit(){
     staticHeight = 65
     for childView in allOutlets{
       contentView.addSubview(childView)
@@ -50,7 +50,7 @@ public class BasicInputCell : StaticTableViewCell{
     
   }
   
-  public func installConstaints(){
+  open func installConstaints(){
     textField.pa_trailing.eq(15).install() // pa_trailing.eq(15)
     textField.pa_bottom.eq(10).install() //pinBottom(10)
     textField.pa_leading.eq(15).install() // pa_leading.eq(15)
@@ -58,8 +58,15 @@ public class BasicInputCell : StaticTableViewCell{
     
   }
   
-  public func setupAttrs(){
-    textField.font = UIFont.systemFontOfSize(15)
+  open func setupAttrs(){
+    textField.font = UIFont.systemFont(ofSize: 15)
+  }
+}
+
+extension BasicInputCell{
+  public var inputText:String{
+    get{ return textField.text?.trimmed() ?? "" }
+    set{ textField.text = newValue }
   }
 }
 

@@ -7,59 +7,60 @@
 //
 
 import Foundation
+import UIKit
 
 public enum GroupButtonBarAlignment:Int{
-  case Left
-  case Right
-  case Center
+  case left
+  case right
+  case center
 }
 
-public class GroupButtonBar:UIView{
+open class GroupButtonBar:UIView{
   
-  public var buttonCount:Int{
+  open var buttonCount:Int{
     return buttons.count
   }
   
-  public var buttonHeight:CGFloat = 33{
+  open var buttonHeight:CGFloat = 33{
     didSet{
       setNeedsLayout()
     }
   }
-  public var buttonWidth:CGFloat = 80{
+  open var buttonWidth:CGFloat = 80{
     didSet{
       setNeedsLayout()
     }
   }
-  public var buttonSpace:CGFloat = 10{
+  open var buttonSpace:CGFloat = 10{
     didSet{
       setNeedsLayout()
     }
   }
-  public var margin:CGFloat = 15{
+  open var margin:CGFloat = 15{
     didSet{
       setNeedsLayout()
     }
   }
-  public var alignment = GroupButtonBarAlignment.Right{
+  open var alignment = GroupButtonBarAlignment.right{
     didSet{
       setNeedsLayout()
     }
   }
   
-  public var onButtonClicked:(UIButton -> Void)?
+  open var onButtonClicked:((UIButton) -> Void)?
   
-  private var buttons:[UIButton] = []
+  fileprivate var buttons:[UIButton] = []
   
-  public func appendButton(button:UIButton){
+  open func appendButton(_ button:UIButton){
     self.buttons.append(button)
     onButtonListChanged()
   }
   
-  public func appendButtons(buttons:[UIButton]){
-    self.buttons.appendContentsOf(buttons)
+  open func appendButtons(_ buttons:[UIButton]){
+    self.buttons.append(contentsOf: buttons)
     onButtonListChanged()
   }
-  public func updateButtons(buttons:[UIButton]){
+  open func updateButtons(_ buttons:[UIButton]){
     for button in buttons{
       button.removeFromSuperview()
     }
@@ -67,7 +68,7 @@ public class GroupButtonBar:UIView{
      button.removeFromSuperview()
     }
     self.buttons.removeAll()
-    self.buttons.appendContentsOf(buttons)
+    self.buttons.append(contentsOf: buttons)
     onButtonListChanged()
   }
   
@@ -77,26 +78,26 @@ public class GroupButtonBar:UIView{
     layoutIfNeeded()
   }
   
-  public func buttonAtIndex(index:Int) -> UIButton?{
+  open func buttonAtIndex(_ index:Int) -> UIButton?{
     return ( index > -1 && index < buttons.count) ? buttons[index] : nil
   }
   
-  public var firstButton:UIButton?{
+  open var firstButton:UIButton?{
     return buttonAtIndex(0)
   }
   
-  public var secondButton:UIButton?{
+  open var secondButton:UIButton?{
     return buttonAtIndex(1)
   }
   
-  public var thirdButton:UIButton?{
+  open var thirdButton:UIButton?{
     return buttonAtIndex(2)
   }
   
   
   public init(
     buttons:[UIButton],
-    alignment:GroupButtonBarAlignment = .Right
+    alignment:GroupButtonBarAlignment = .right
     ){
     self.buttons = buttons
     self.alignment = alignment
@@ -108,11 +109,11 @@ public class GroupButtonBar:UIView{
     for button in buttons{
       button.removeFromSuperview()
       addSubview(button)
-      button.addTarget(self, action: #selector(GroupButtonBar.onPressedButton(_:)), forControlEvents: .TouchUpInside)
+      button.addTarget(self, action: #selector(GroupButtonBar.onPressedButton(_:)), for: .touchUpInside)
     }
   }
 
-  func onPressedButton(sender:UIButton){
+  func onPressedButton(_ sender:UIButton){
     onButtonClicked?(sender)
   }
   
@@ -122,31 +123,31 @@ public class GroupButtonBar:UIView{
   
   
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     switch alignment{
-    case .Right:layoutButtonsAlignRight()
-    case .Left:layoutButtonsAlignLeft()
-    case .Center: layoutButtonsAlignCenter()
+    case .right:layoutButtonsAlignRight()
+    case .left:layoutButtonsAlignLeft()
+    case .center: layoutButtonsAlignCenter()
     }
     
   }
   
-  private func layoutButtonsAlignCenter(){
+  fileprivate func layoutButtonsAlignCenter(){
     if buttons.isEmpty{
       return
     }
    
     var views = buttons
-    var leftFrame = CGRectZero
-    var rightFrame = CGRectZero
+    var leftFrame = CGRect.zero
+    var rightFrame = CGRect.zero
     
     let fullOffset = buttonWidth + buttonSpace
       let middleFrame = CGRect(center: bounds.center, width: buttonWidth, height: buttonHeight)
     // 奇数个先处理中间一个
     if views.count % 2 != 0{
        let middle = (views.count + 1) / 2 - 1
-        let middleView = views.removeAtIndex(middle)
+        let middleView = views.remove(at: middle)
         middleView.frame = middleFrame
         leftFrame = middleFrame.offsetBy(dx: -fullOffset, dy: 0)
         rightFrame = middleFrame.offsetBy(dx: fullOffset, dy: 0)
@@ -172,22 +173,23 @@ public class GroupButtonBar:UIView{
     
   }
   
-  private func layoutButtonsAlignLeft(){
+  fileprivate func layoutButtonsAlignLeft(){
     let originY = bounds.height * 0.5 - buttonHeight * 0.5
     var buttonFrame = CGRect(x: margin, y: originY, width: buttonWidth, height: buttonHeight)
     for button in buttons{
       button.frame = buttonFrame
-      buttonFrame.offsetInPlace(dx: buttonWidth + buttonSpace, dy: 0)
+      
+      buttonFrame = buttonFrame.offsetBy(dx: buttonWidth + buttonSpace, dy: 0)
     }
   }
   
-  private func layoutButtonsAlignRight(){
+  fileprivate func layoutButtonsAlignRight(){
     let originY = bounds.height * 0.5 - buttonHeight * 0.5
     let originX = bounds.maxX - margin - buttonWidth
     var buttonFrame = CGRect(x: originX, y: originY, width: buttonWidth, height: buttonHeight)
     for button in buttons{
       button.frame = buttonFrame
-      buttonFrame.offsetInPlace(dx: -(buttonWidth + buttonSpace), dy: 0)
+      buttonFrame = buttonFrame.offsetBy(dx: -(buttonWidth + buttonSpace), dy: 0)
     }
   }
   

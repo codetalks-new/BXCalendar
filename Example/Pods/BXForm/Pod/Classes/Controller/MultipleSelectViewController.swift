@@ -11,78 +11,82 @@ import SwiftyJSON
 import BXModel
 
 
-public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: UITableViewController {
-    public private(set) var options:[T] = []
-    public let adapter : SimpleTableViewAdapter<T> = SimpleTableViewAdapter<T>(cellStyle:.Default)
-    public private(set) var selectedItems :Set<T> = []
-    public var completionHandler : ( (Set<T>) -> Void )?
-    public var onSelectOption:(T -> Void)?
-    public var multiple = true
-    public var showSelectToolbar = true
-    public var isSelectAll = false
+open class MultipleSelectViewController<T:BXBasicItemAware>: UITableViewController where T:Hashable {
+    open fileprivate(set) var options:[T] = []
+    open let adapter : SimpleTableViewAdapter<T> = SimpleTableViewAdapter<T>(cellStyle:.default)
+    open fileprivate(set) var selectedItems :Set<T> = []
+    open var completionHandler : ( (Set<T>) -> Void )?
+    open var onSelectOption:((T) -> Void)?
+    open var multiple = true
+    open var showSelectToolbar = true
+    open var isSelectAll = false
   
    public convenience init(){
-    self.init(options:[],style: .Grouped)
+    self.init(options:[],style: .grouped)
   }
   
-  public init(options:[T], style:UITableViewStyle = .Plain){
+  public init(options:[T], style:UITableViewStyle = .plain){
     self.options = options
     adapter.updateItems(options)
     super.init(style: style)
   }
+
+  required public init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+  }
   
-  public func updateOptions(options:[T]){
+  open func updateOptions(_ options:[T]){
     self.options.removeAll()
-    self.options.appendContentsOf(options)
+    self.options.append(contentsOf: options)
     adapter.updateItems(options)
   }
   
-  public func setInitialSelectedItems<S:SequenceType where S.Generator.Element == T>(items:S){
+  open func setInitialSelectedItems<S:Sequence>(_ items:S) where S.Iterator.Element == T{
     selectedItems.removeAll()
-    selectedItems.unionInPlace(items)
+    selectedItems.formUnion(items)
   }
  
   
-  public var selectAllButton:UIBarButtonItem?
-  private var originalToolbarHidden: Bool?
-  public override func loadView() {
+  open var selectAllButton:UIBarButtonItem?
+  fileprivate var originalToolbarHidden: Bool?
+  open override func loadView() {
     super.loadView()
-    originalToolbarHidden = navigationController?.toolbarHidden
+    originalToolbarHidden = navigationController?.isToolbarHidden
     if showSelectToolbar{
-      navigationController?.toolbarHidden = false
+      navigationController?.isToolbarHidden = false
       navigationController?.toolbar.tintColor = FormColors.primaryColor
-      let leftSpaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-      let selectAllButton = UIBarButtonItem(title:isSelectAll ? "全不选": "全选", style: .Plain, target: self, action: #selector(MultipleSelectViewController.selectAllButtonPressed(_:)))
-      selectAllButton.tintColor = UIColor.blueColor()
+      let leftSpaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+      let selectAllButton = UIBarButtonItem(title:isSelectAll ? "全不选": "全选", style: .plain, target: self, action: #selector(MultipleSelectViewController.selectAllButtonPressed(_:)))
+      selectAllButton.tintColor = UIColor.blue
       toolbarItems = [leftSpaceItem,selectAllButton]
       self.selectAllButton = selectAllButton
     }
   }
   
   
-  func selectAllButtonPressed(sender:AnyObject){
+  func selectAllButtonPressed(_ sender:AnyObject){
     isSelectAll = !isSelectAll
     selectAllButton?.title = isSelectAll ? "全不选": "全选"
     if isSelectAll{
-      selectedItems.unionInPlace(options)
+      selectedItems.formUnion(options)
     }else{
       selectedItems.removeAll()
     }
     tableView.reloadData()
   }
   
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         adapter.updateItems(options)//
         adapter.bindTo(tableView)
       
         adapter.configureCellBlock = { (cell,indexPath) in
                 let item = self.adapter.itemAtIndexPath(indexPath)
-            cell.accessoryType =  self.selectedItems.contains(item) ? .Checkmark: .None
+            cell.accessoryType =  self.selectedItems.contains(item) ? .checkmark: .none
         }
         tableView.tableFooterView = UIView()
         if multiple{
-          let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(MultipleSelectViewController.selectDone(_:)))
+          let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(MultipleSelectViewController.selectDone(_:)))
           self.navigationItem.rightBarButtonItem = doneButton
         }
       
@@ -91,19 +95,19 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
         }
     }
     
-    func selectDone(sender:AnyObject){
+    func selectDone(_ sender:AnyObject){
         self.completionHandler?(selectedItems)
         #if DEBUG
         NSLog("selectDone")
         #endif
-        let poped = navigationController?.popViewControllerAnimated(true)
+        let poped = navigationController?.popViewController(animated: true)
       if poped == nil{
-          dismissViewControllerAnimated(true, completion: nil)
+          dismiss(animated: true, completion: nil)
       }
     }
     
-    func onSelectItem(item:T,atIndexPath indexPath:NSIndexPath){
-        guard let  cell = tableView.cellForRowAtIndexPath(indexPath) else{
+    func onSelectItem(_ item:T,atIndexPath indexPath:IndexPath){
+        guard let  cell = tableView.cellForRow(at: indexPath) else{
             return
         }
       
@@ -115,7 +119,7 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
         }
        
         let isChecked = selectedItems.contains(item)
-        cell.accessoryType = isChecked ? .Checkmark : .None
+        cell.accessoryType = isChecked ? .checkmark : .none
       
         if !multiple{
           self.onSelectOption?(item)
@@ -123,15 +127,15 @@ public class MultipleSelectViewController<T:BXBasicItemAware where T:Hashable>: 
         }
     }
   
-  public override func viewDidDisappear(animated: Bool) {
+  open override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     if let state = originalToolbarHidden{
       navigationController?.setToolbarHidden(state, animated: true)
     }
   }
 
-  public override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return CGFloat.min
+  open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return CGFloat.leastNormalMagnitude
   }
 
 }

@@ -11,9 +11,9 @@ import PinAuto
 // icon[l0,y]:i
 // text[l8,t0,b0](f15,cdt)
 
-public class IconLabel : UIView{
-  public let iconImageView = UIImageView(frame:CGRectZero)
-  public let textLabel = UILabel(frame:CGRectZero)
+open class IconLabel : UIView{
+  open let iconImageView = UIImageView(frame:CGRect.zero)
+  open let textLabel = UILabel(frame:CGRect.zero)
   
   
   public override init(frame: CGRect) {
@@ -21,7 +21,7 @@ public class IconLabel : UIView{
     commonInit()
   }
   
-  override public func awakeFromNib() {
+  override open func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -51,10 +51,10 @@ public class IconLabel : UIView{
   
 
   
-  public var iconLeadingConstraint:NSLayoutConstraint!
+  open var iconLeadingConstraint:NSLayoutConstraint!
   var iconPaddingConstraint:NSLayoutConstraint!
   
-  public var iconPadding : CGFloat{
+  open var iconPadding : CGFloat{
     set{
       iconPaddingConstraint.constant = newValue
     }get{
@@ -75,29 +75,29 @@ public class IconLabel : UIView{
     
   }
   
-  public override class func requiresConstraintBasedLayout() -> Bool{
+  open override class var requiresConstraintBasedLayout : Bool{
     return true
   }
   
-  public override func intrinsicContentSize() -> CGSize {
-    let iconSize = iconImageView.intrinsicContentSize()
-    let textSize = textLabel.intrinsicContentSize()
+  open override var intrinsicContentSize : CGSize {
+    let iconSize = iconImageView.intrinsicContentSize
+    let textSize = textLabel.intrinsicContentSize
     let width = iconSize.width + iconPadding + textSize.width
     let height = max(iconSize.height,textSize.height)
     return CGSize(width: width, height: height)
   }
   
   func setupAttrs(){
-    textLabel.textAlignment = .Left
-    textLabel.setContentHuggingPriority(240, forAxis: .Horizontal)
-    textLabel.textColor = UIColor.darkTextColor()
-    textLabel.font = UIFont.systemFontOfSize(15)
-    userInteractionEnabled = false
+    textLabel.textAlignment = .left
+    textLabel.setContentHuggingPriority(240, for: .horizontal)
+    textLabel.textColor = UIColor.darkText
+    textLabel.font = UIFont.systemFont(ofSize: 15)
+    isUserInteractionEnabled = false
   }
   
   //MARK: Getter And Setter
   
-  public var text:String?{
+  open var text:String?{
     get{
       return textLabel.text
     }set{
@@ -106,7 +106,7 @@ public class IconLabel : UIView{
     }
   }
   
-  public var icon:UIImage?{
+  open var icon:UIImage?{
     get{
       return iconImageView.image
     }set{
@@ -115,7 +115,7 @@ public class IconLabel : UIView{
     }
   }
   
-  public var textColor:UIColor?{
+  open var textColor:UIColor?{
     get{
       return textLabel.textColor
     }set{
@@ -123,7 +123,7 @@ public class IconLabel : UIView{
     }
   }
   
-  public var font:UIFont{
+  open var font:UIFont{
     get{
       return textLabel.font
     }set{

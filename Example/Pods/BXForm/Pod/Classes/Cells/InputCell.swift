@@ -17,19 +17,19 @@ import PinAuto
 //_[l15,y,w72](f17,cst)
 //_[l18,y,r15](f15,cht):f
 
-public class InputCell : StaticTableViewCell{
-  public let label = UILabel(frame:CGRectZero)
-  public let textField = UITextField(frame:CGRectZero)
+open class InputCell : StaticTableViewCell{
+  open let label = UILabel(frame:CGRect.zero)
+  open let textField = UITextField(frame:CGRect.zero)
   
   
   public convenience init() {
-    self.init(style: .Default, reuseIdentifier: "InputCellCell")
+    self.init(style: .default, reuseIdentifier: "InputCellCell")
   }
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -47,7 +47,7 @@ public class InputCell : StaticTableViewCell{
     super.init(coder: aDecoder)
   }
   
-  public func commonInit(){
+  open func commonInit(){
     for childView in allOutlets{
       contentView.addSubview(childView)
       childView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ public class InputCell : StaticTableViewCell{
     
   }
   
-  public func installConstaints(){
+  open func installConstaints(){
     label.pa_centerY.install()
     label.pa_leading.eq(15).install()
     label.pa_width.eq(72).install()
@@ -66,12 +66,12 @@ public class InputCell : StaticTableViewCell{
     textField.pa_trailing.eq(15).install()
   }
   
-  public func setupAttrs(){
-    label.textAlignment = .Left
+  open func setupAttrs(){
+    label.textAlignment = .left
     label.textColor = FormColors.secondaryTextColor
-    label.font = UIFont.systemFontOfSize(17)
-    textField.textColor = UIColor.darkTextColor()
-    textField.font = UIFont.systemFontOfSize(17)
+    label.font = UIFont.systemFont(ofSize: 17)
+    textField.textColor = UIColor.darkText
+    textField.font = UIFont.systemFont(ofSize: 17)
     shouldHighlight = false
   }
 }

@@ -9,22 +9,22 @@
 import UIKit
 
 public extension UIViewController{
-  public func bx_prompt(message:String,handler:(Bool -> Void)){
-    let confirmController = ConfirmAlertController(title: nil, message: message, preferredStyle: .Alert)
+  public func bx_prompt(_ message:String,handler:@escaping ((Bool) -> Void)){
+    let confirmController = ConfirmAlertController(title: nil, message: message, preferredStyle: .alert)
     confirmController.onConfirmCallback = {
       sure in
       handler(sure)
     }
-    presentViewController(confirmController, animated: true, completion: nil)
+    present(confirmController, animated: true, completion: nil)
   }
   
-  public func bx_confirm(message:String,closure:( Void -> Void)){
-    let confirmController = ConfirmAlertController(title: nil, message: message, preferredStyle: .Alert)
+  public func bx_confirm(_ message:String,closure:@escaping ( (Void) -> Void)){
+    let confirmController = ConfirmAlertController(title: nil, message: message, preferredStyle: .alert)
     confirmController.shouldShowCancelButton = false
     confirmController.onConfirmCallback = {
       sure in
       closure()
     }
-    presentViewController(confirmController, animated: true, completion: nil)
+    present(confirmController, animated: true, completion: nil)
   }
 }

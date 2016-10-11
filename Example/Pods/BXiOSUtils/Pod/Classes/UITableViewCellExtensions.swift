@@ -10,7 +10,7 @@ import UIKit
 
 public extension UITableViewCell{
   public func bx_removeSeperatorInset(){
-    separatorInset = UIEdgeInsetsZero
+    separatorInset = UIEdgeInsets.zero
     bx_removeLayoutMargins()
   }
   
@@ -20,6 +20,6 @@ public extension UITableViewCell{
   
   public func bx_removeLayoutMargins(){
       preservesSuperviewLayoutMargins = false
-      layoutMargins = UIEdgeInsetsZero
+      layoutMargins = UIEdgeInsets.zero
   }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class ComplexTableViewAdapter<T,V:StaticTableViewCell where V:BXBindable >:SimpleGenericTableViewAdapter<T,V>{
+open class ComplexTableViewAdapter<T,V:StaticTableViewCell>:SimpleGenericTableViewAdapter<T,V> where V:BXBindable {
  
   var cells:[UITableViewCell] = []
   public init(
@@ -19,42 +19,42 @@ public class ComplexTableViewAdapter<T,V:StaticTableViewCell where V:BXBindable 
     self.cells = cells
   }
   
-  public func cellAtIndexPath(indexPath:NSIndexPath) -> UITableViewCell{
-    return self.cells[indexPath.row]
+  open func cellAtIndexPath(_ indexPath:IndexPath) -> UITableViewCell{
+    return self.cells[(indexPath as NSIndexPath).row]
   }
   
-  public override func itemAtIndexPath(indexPath: NSIndexPath) -> T {
-    let index = indexPath.row - cells.count
+  open override func itemAtIndexPath(_ indexPath: IndexPath) -> T {
+    let index = (indexPath as NSIndexPath).row - cells.count
     return items[index]
   }
   
-  public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return numberOfRows()
   }
   
-  public override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-    if indexPath.row < cells.count{
+  open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    if (indexPath as NSIndexPath).row < cells.count{
       return cellAtIndexPath(indexPath)
     }else{
       return super.cellForRowAtIndexPath(indexPath)
     }
   }
   
-  public func append(cell:UITableViewCell){
+  open func append(_ cell:UITableViewCell){
     self.cells.append(cell)
     tableView?.reloadData()
   }
   
-  public func appendContentsOf(cells:[UITableViewCell]){
-    self.cells.appendContentsOf(cells)
+  open func appendContentsOf(_ cells:[UITableViewCell]){
+    self.cells.append(contentsOf: cells)
     tableView?.reloadData()
   }
   
-  public override func numberOfRows() -> Int {
+  open override func numberOfRows() -> Int {
     return cells.count + super.numberOfItems
   }
   
-  public override var numberOfItems:Int{
+  open override var numberOfItems:Int{
     return cells.count + super.numberOfItems
   }
 }

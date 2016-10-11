@@ -32,6 +32,8 @@ it, simply add the following line to your Podfile:
 pod "BXCalendar"
 ```
 
+If Swift 2.2 then use `0.1.3` else if Swift 3 then use the latest version.
+
 ## Author
 
 banxi1988, banxi1988@gmail.com

@@ -9,7 +9,7 @@
 import Foundation
 
 class PasswordPlaceholderView:UIView{
-  var placeholderColor = UIColor.blackColor(){
+  var placeholderColor = UIColor.black{
     didSet{
       setNeedsDisplay()
     }
@@ -21,14 +21,14 @@ class PasswordPlaceholderView:UIView{
     }
   }
   
-  override func intrinsicContentSize() -> CGSize {
+  override var intrinsicContentSize : CGSize {
     return CGSize(size: placeholderRadius * 2)
   }
   
-  override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
     let ovalRect = CGRect(center: rect.center, radius: placeholderRadius)
-    let path = UIBezierPath(ovalInRect: ovalRect)
+    let path = UIBezierPath(ovalIn: ovalRect)
     placeholderColor.setFill()
     path.fill()
   }
@@ -39,8 +39,8 @@ import BXModel
 import BXiOSUtils
 
 
-public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
-  let hiddenTextField = UITextField(frame:CGRectZero)
+open class NumberPasswordEditorView : UIView,UITextFieldDelegate{
+  let hiddenTextField = UITextField(frame:CGRect.zero)
   let passwordNumbersView = GridView()
   let passwordNumberCount:Int
   let passwordNumberPlaceholders:[PasswordPlaceholderView]
@@ -49,12 +49,12 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
     self.passwordNumberCount = passwordNumberCount
     self.passwordNumberPlaceholders = (1...passwordNumberCount).map{ _ in PasswordPlaceholderView() }
     for holder in self.passwordNumberPlaceholders{
-      holder.backgroundColor = .whiteColor()
+      holder.backgroundColor = .white
       holder.placeholderRadius = 4
-      holder.hidden = true
+      holder.isHidden = true
     }
     hiddenTextField.text = ""
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
     passwordNumbersView.showDividerMiddle = true
     passwordNumbersView.updateChildViews(passwordNumberPlaceholders)
     
@@ -79,7 +79,7 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
     fatalError("NotImplemented")
   }
   
-  public func commonInit(){
+  open func commonInit(){
     for childView in allOutlets{
       addSubview(childView)
       childView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +89,7 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
     
   }
   
-  public func installConstaints(){
+  open func installConstaints(){
     passwordNumbersView.pac_edge(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     
     hiddenTextField.pa_centerY.install()
@@ -99,11 +99,11 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
     
   }
   
-  public func setupAttrs(){
+  open func setupAttrs(){
     hiddenTextField.delegate = self
-    hiddenTextField.keyboardType = .NumberPad
-    hiddenTextField.addTarget(self, action: #selector(NumberPasswordEditorView.onTextChanged(_:)), forControlEvents: .EditingChanged)
-    hiddenTextField.secureTextEntry = true // 就算不可见也要设置,因为 UITextField 有全局广播通知
+    hiddenTextField.keyboardType = .numberPad
+    hiddenTextField.addTarget(self, action: #selector(NumberPasswordEditorView.onTextChanged(_:)), for: .editingChanged)
+    hiddenTextField.isSecureTextEntry = true // 就算不可见也要设置,因为 UITextField 有全局广播通知
     passwordNumbersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NumberPasswordEditorView.onTap(_:))))
     layer.cornerRadius = 4
     clipsToBounds = true
@@ -111,19 +111,19 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
   
   
   
-  func onTap(sender:AnyObject){
+  func onTap(_ sender:AnyObject){
     hiddenTextField.becomeFirstResponder()
   }
   
-  public override func canBecomeFirstResponder() -> Bool {
-    return hiddenTextField.canBecomeFirstResponder()
+  open override var canBecomeFirstResponder : Bool {
+    return hiddenTextField.canBecomeFirstResponder
   }
   
-  public override func becomeFirstResponder() -> Bool {
+  open override func becomeFirstResponder() -> Bool {
     return hiddenTextField.becomeFirstResponder()
   }
   
-  public override func resignFirstResponder() -> Bool {
+  open override func resignFirstResponder() -> Bool {
     return hiddenTextField.resignFirstResponder()
   }
   
@@ -133,21 +133,21 @@ public class NumberPasswordEditorView : UIView,UITextFieldDelegate{
     let numberCount = (hiddenTextField.text ?? "").characters.count
     var count = 0
     for placehoder in passwordNumberPlaceholders{
-      placehoder.hidden = count >= numberCount
+      placehoder.isHidden = count >= numberCount
       count += 1
     }
   }
   
-  public var didInputAllPasswordNumberBlock:(String -> Void)?
+  open var didInputAllPasswordNumberBlock:((String) -> Void)?
   
-  func onTextChanged(sender:AnyObject){
+  func onTextChanged(_ sender:AnyObject){
     updateVisiblePasswordPlacehoders()
     if password.characters.count == 6{
       self.didInputAllPasswordNumberBlock?(password)
     }
   }
   
-  public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     NSLog("\(#function) \(range) \(string)")
     let password = textField.text ?? ""
     let currentCount = password.characters.count

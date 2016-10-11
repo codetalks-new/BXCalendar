@@ -6,16 +6,21 @@
 
 import UIKit
 
-public class IconButton:UIButton{
-  public var iconPadding = FormMetrics.iconPadding
+open class IconButton:UIButton{
+  open var iconPadding = FormMetrics.iconPadding{
+    didSet{
+      titleEdgeInsets = UIEdgeInsets(top: 0, left: icon == nil ? 0: iconPadding, bottom: 0, right: 0)
+      invalidateIntrinsicContentSize()
+    }
+  }
   
-  public var cornerRadius:CGFloat = 4.0 {
+  open var cornerRadius:CGFloat = 4.0 {
     didSet{
       setNeedsLayout()
     }
   }
   
-  public var lineWidth :CGFloat = 0.5 {
+  open var lineWidth :CGFloat = 0.5 {
     didSet{
       setNeedsLayout()
     }
@@ -28,18 +33,18 @@ public class IconButton:UIButton{
   }()
   
   
-  public override func intrinsicContentSize() -> CGSize {
-      let size = super.intrinsicContentSize()
+  open override var intrinsicContentSize : CGSize {
+      let size = super.intrinsicContentSize
       return CGSize(width: size.width + iconPadding, height: size.height)
   }
   
-  public var icon:UIImage?{
+  open var icon:UIImage?{
     set{
-      setImage(newValue, forState: .Normal)
+      setImage(newValue, for: UIControlState())
       titleEdgeInsets = UIEdgeInsets(top: 0, left: newValue == nil ? 0: iconPadding, bottom: 0, right: 0)
       invalidateIntrinsicContentSize()
     }get{
-      return imageForState(.Normal)
+      return image(for: UIControlState())
     }
   }
 }

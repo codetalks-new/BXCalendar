@@ -10,111 +10,111 @@ import UIKit
 
 public protocol BXDataSourceContainer{
   associatedtype ItemType
-  func updateItems<S:SequenceType where S.Generator.Element == ItemType>(items:S)
-  func appendItems<S:SequenceType where S.Generator.Element == ItemType>(items:S)
+  func updateItems<S:Sequence>(_ items:S) where S.Iterator.Element == ItemType
+  func appendItems<S:Sequence>(_ items:S) where S.Iterator.Element == ItemType
   var numberOfItems:Int{ get }
 }
 
-public class SimpleGenericDataSource<T>:NSObject,UITableViewDataSource,UICollectionViewDataSource,BXDataSourceContainer{
-    public var reuseIdentifier = "cell"
-    public private(set) var items = [T]()
-    public var section = 0
+open class SimpleGenericDataSource<T>:NSObject,UITableViewDataSource,UICollectionViewDataSource,BXDataSourceContainer{
+    open var reuseIdentifier = "cell"
+    open fileprivate(set) var items = [T]()
+    open var section = 0
     public typealias ItemType = T
-    public typealias DidSelectedItemBlock = ( (T,atIndexPath:NSIndexPath) -> Void )
+    public typealias DidSelectedItemBlock = ( (T,_ atIndexPath:IndexPath) -> Void )
     
     public init(items:[T] = []){
         self.items = items
     }
     
-   public func itemAtIndexPath(indexPath:NSIndexPath) -> T{
-        return items[indexPath.row]
+   open func itemAtIndexPath(_ indexPath:IndexPath) -> T{
+        return items[(indexPath as NSIndexPath).row]
     }
     
-   public func numberOfRows() -> Int {
+   open func numberOfRows() -> Int {
         return self.items.count
    }
   
     
     // MARK: UITableViewDataSource
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRows()
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(self.reuseIdentifier, forIndexPath: indexPath)
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.reuseIdentifier, for: indexPath)
         configureTableViewCell(cell, atIndexPath: indexPath)
         return cell
     }
     
     // MARK: UICollectionViewDataSource
     
-   public final func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+   public final func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-   public final func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+   public final func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return numberOfRows()
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(self.reuseIdentifier, forIndexPath: indexPath)
+   open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath)
         configureCollectionViewCell(cell, atIndexPath: indexPath)
         return cell
     }
     
     // MARK : Helper
     
-    public func configureCollectionViewCell(cell:UICollectionViewCell,atIndexPath indexPath:NSIndexPath){
+    open func configureCollectionViewCell(_ cell:UICollectionViewCell,atIndexPath indexPath:IndexPath){
         
     }
     
-   public func configureTableViewCell(cell:UITableViewCell,atIndexPath indexPath:NSIndexPath){
+   open func configureTableViewCell(_ cell:UITableViewCell,atIndexPath indexPath:IndexPath){
         
     }
 
   // MARK: BXDataSourceContainer
   // cause /Users/banxi/Workspace/BXModel/Pod/Classes/SimpleGenericTableViewAdapter.swift:50:25: Declarations from extensions cannot be overridden yet
   
-  public func updateItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  open func updateItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
     self.items.removeAll()
-    self.items.appendContentsOf(items)
+    self.items.append(contentsOf: items)
   }
   
-  public func appendItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
-    self.items.appendContentsOf(items)
+  open func appendItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
+    self.items.append(contentsOf: items)
   }
  
-  public func insert(item:T,atIndex index :Int){
-    self.items.insert(item, atIndex: index)
+  open func insert(_ item:T,atIndex index :Int){
+    self.items.insert(item, at: index)
   }
-    public var numberOfItems:Int{
+    open var numberOfItems:Int{
       return self.items.count
     }
   
 }
 
 extension SimpleGenericDataSource where T:Equatable{
-  public func indexOfItem(item:T) -> Int?{
-    return self.items.indexOf(item)
+  public func indexOfItem(_ item:T) -> Int?{
+    return self.items.index(of: item)
   }
   
-  public func removeAtIndex(index:Int) -> T{
-    return items.removeAtIndex(index)
+  public func removeAtIndex(_ index:Int) -> T{
+    return items.remove(at: index)
   }
   
-  public func removeItem(item:T) -> T?{
+  public func removeItem(_ item:T) -> T?{
     if let index = indexOfItem(item){
-      self.items.removeAtIndex(index)
+      self.items.remove(at: index)
     }
     return nil
   }
   
-  public func removeItems(items:[T]){
+  public func removeItems(_ items:[T]){
     for item in items{
       removeItem(item)
     }

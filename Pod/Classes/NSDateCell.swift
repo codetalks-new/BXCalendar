@@ -18,7 +18,7 @@ import BXForm
 //day[e0]:v
 
 class NSDateCell : UICollectionViewCell  ,BXBindable {
-  let dayView = DayView(frame:CGRectZero)
+  let dayView = DayView(frame:CGRect.zero)
   
   
   override init(frame: CGRect) {
@@ -26,13 +26,13 @@ class NSDateCell : UICollectionViewCell  ,BXBindable {
     commonInit()
   }
   
-  var date:NSDate = NSDate()
-  func bind(item:NSDate){
+  var date:Foundation.Date = Foundation.Date()
+  func bind(_ item:Foundation.Date){
     self.date = item
     if !item.isPlaceholder{
       dayView.bind(item)
     }
-    dayView.hidden = item.isPlaceholder
+    dayView.isHidden = item.isPlaceholder
   }
   
   override func awakeFromNib() {
@@ -68,9 +68,9 @@ class NSDateCell : UICollectionViewCell  ,BXBindable {
   func setupAttrs(){
   }
   
-  override var selected: Bool{
+  override var isSelected: Bool{
     didSet{
-      dayView.selected = selected
+      dayView.selected = isSelected
     }
   }
   

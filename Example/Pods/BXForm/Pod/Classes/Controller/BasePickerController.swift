@@ -13,23 +13,23 @@ import UIKit
 import PinAuto
 import BXiOSUtils
 
-public class BasePickerController: UIViewController {
+open class BasePickerController: UIViewController {
   
-  public let confirmBar = ConfirmButtonBar(frame: CGRectZero)
+  open let confirmBar = ConfirmButtonBar(frame: CGRect.zero)
   
-  public var pickerView:UIView{
+  open var pickerView:UIView{
     fatalError("Should Implements Custom pickerView")
   }
   
-  public lazy var dividerView :UIView = {
+  open lazy var dividerView :UIView = {
     let divider = UIView()
     divider.backgroundColor = UIColor(white: 0.912, alpha: 1.0)
     return divider
   }()
   
-  private var _confirmBarOnTop = true
+  fileprivate var _confirmBarOnTop = true
   
-  public var confirmBarOnTop:Bool{
+  open var confirmBarOnTop:Bool{
     get{
       return _confirmBarOnTop
     }set{
@@ -37,7 +37,7 @@ public class BasePickerController: UIViewController {
     }
   }
   
-  public var confirmBarOnBottom:Bool{
+  open var confirmBarOnBottom:Bool{
     get{
       return !_confirmBarOnTop
     }set{
@@ -49,11 +49,11 @@ public class BasePickerController: UIViewController {
     self.init(nibName: nil, bundle: nil)
   }
   // must needed for iOS 8
-  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     transitioningDelegate = self
-    modalPresentationStyle = .Custom
-    modalTransitionStyle = .CoverVertical
+    modalPresentationStyle = .custom
+    modalTransitionStyle = .coverVertical
     preferredContentSize = CGSize(width: screenWidth, height: 248)
   }
   var allOutlets :[UIView]{
@@ -73,7 +73,7 @@ public class BasePickerController: UIViewController {
   }
   
   func installConstaints(){
-    confirmBar.setContentCompressionResistancePriority(900, forAxis: .Vertical)
+    confirmBar.setContentCompressionResistancePriority(900, for: .vertical)
     pickerView.pac_horizontal(0) //pinHorizontal(0)
     pickerView.clipsToBounds = true
     confirmBar.pa_height.eq(44).install() // pa_height.eq(44)
@@ -98,38 +98,38 @@ public class BasePickerController: UIViewController {
   func setupAttrs(){
   }
   
-  override public func loadView(){
+  override open func loadView(){
     super.loadView()
-    self.view.backgroundColor = .whiteColor()
+    self.view.backgroundColor = .white
     commonInit()
   }
   
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
     super.viewDidLoad()
     
-    confirmBar.cancelButton.addTarget(self, action: #selector(BasePickerController.onCancelButtonPressed(_:)), forControlEvents: .TouchUpInside)
-    confirmBar.okButton.addTarget(self, action: #selector(BasePickerController.onOkButtonPressed(_:)), forControlEvents: .TouchUpInside)
+    confirmBar.cancelButton.addTarget(self, action: #selector(BasePickerController.onCancelButtonPressed(_:)), for: .touchUpInside)
+    confirmBar.okButton.addTarget(self, action: #selector(BasePickerController.onOkButtonPressed(_:)), for: .touchUpInside)
   }
   
-  public var onCancelHandler:( Void -> Void)?
+  open var onCancelHandler:( (Void) -> Void)?
   
   
-  @IBAction func onCancelButtonPressed(sender:AnyObject){
+  @IBAction func onCancelButtonPressed(_ sender:AnyObject){
     self.dismiss()
     self.onCancelHandler?()
   }
   
-  @IBAction func onOkButtonPressed(sender:AnyObject){
+  @IBAction func onOkButtonPressed(_ sender:AnyObject){
     self.dismiss()
     onPickDone()
   }
   
-  public func onPickDone(){
+  open func onPickDone(){
     
   }
   
   func dismiss(){
-    self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    self.presentingViewController?.dismiss(animated: true, completion: nil)
   }
   
   
@@ -137,8 +137,8 @@ public class BasePickerController: UIViewController {
 
 // MARK: UIViewControllerTransitioningDelegate
 extension BasePickerController:UIViewControllerTransitioningDelegate {
-  public func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-    let presentation = ActionSheetPresentationController(presentedViewController: presented, presentingViewController: presenting)
+  public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    let presentation = ActionSheetPresentationController(presentedViewController: presented, presenting: presenting!)
     return presentation
   }
 }

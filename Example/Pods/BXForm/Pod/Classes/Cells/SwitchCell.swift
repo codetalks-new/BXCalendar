@@ -13,24 +13,24 @@ import BXModel
 // -SwitchCell:tc
 // toggle[x,r15]:sw
 
-public class SwitchCell : StaticTableViewCell,BXBindable{
-  public let toggleSwitch = UISwitch(frame:CGRectZero)
+open class SwitchCell : StaticTableViewCell,BXBindable{
+  open let toggleSwitch = UISwitch(frame:CGRect.zero)
   
   
   public convenience init() {
-    self.init(style: .Default, reuseIdentifier: "SwitchCellCell")
+    self.init(style: .value1, reuseIdentifier: "SwitchCellCell")
   }
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     commonInit()
   }
   
-  public func bind(item:Bool){
-    toggleSwitch.on = item
-    contentView.bringSubviewToFront(toggleSwitch)
+  open func bind(_ item:Bool){
+    toggleSwitch.isOn = item
+    contentView.bringSubview(toFront: toggleSwitch)
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -63,6 +63,15 @@ public class SwitchCell : StaticTableViewCell,BXBindable{
   }
   
   func setupAttrs(){
-    backgroundColor = .whiteColor()
+    backgroundColor = .white
+    textLabel?.font = UIFont.systemFont(ofSize: 15)
+    textLabel?.textColor = FormColors.primaryTextColor
+  }
+  
+  
+  
+  open var on:Bool{
+    get{ return toggleSwitch.isOn }
+    set{ toggleSwitch.isOn = newValue }
   }
 }

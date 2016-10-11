@@ -19,30 +19,30 @@ import BXiOSUtils
 // _[l15,y,r15,r0]:f
 // span[w115,ver0,r0]:b
 
-public class InputGroupView : UIView{
-  public let textField = UITextField(frame:CGRectZero)
-  public let spanButton = UIButton(type:.Custom)
+open class InputGroupView : UIView{
+  open let textField = UITextField(frame:CGRect.zero)
+  open let spanButton = UIButton(type:.custom)
   
-  public var showSpanButton:Bool = true{
+  open var showSpanButton:Bool = true{
     didSet{
-      spanButton.hidden = !showSpanButton
+      spanButton.isHidden = !showSpanButton
       relayout()
     }
   }
  
-  public var showSpanDivider:Bool = true{
+  open var showSpanDivider:Bool = true{
     didSet{
       setNeedsDisplay()
     }
   }
   
-  public var spanDividerColor:UIColor = UIColor(white: 0.937, alpha: 1.0){
+  open var spanDividerColor:UIColor = UIColor(white: 0.937, alpha: 1.0){
     didSet{
       setNeedsDisplay()
     }
   }
   
-  public var spanDividerLineWidth:CGFloat = 1.0{
+  open var spanDividerLineWidth:CGFloat = 1.0{
     didSet{
       setNeedsDisplay()
     }
@@ -54,7 +54,7 @@ public class InputGroupView : UIView{
     commonInit()
   }
   
-  public override func awakeFromNib() {
+  open override func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -110,19 +110,19 @@ public class InputGroupView : UIView{
     
   }
   
-  public func setupAttrs(){
-    backgroundColor = .whiteColor()
+  open func setupAttrs(){
+    backgroundColor = .white
   }
   
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  open override func draw(_ rect: CGRect) {
+    super.draw(rect)
     if showSpanButton && showSpanDivider{
       let ctx = UIGraphicsGetCurrentContext()
       let startX  = spanButton.frame.minX
       spanDividerColor.setStroke()
-      CGContextMoveToPoint(ctx, startX, rect.minY)
-      CGContextAddLineToPoint(ctx, startX, rect.maxY)
-      CGContextStrokePath(ctx)
+      ctx?.move(to: CGPoint(x: startX, y: rect.minY))
+      ctx?.addLine(to: CGPoint(x: startX, y: rect.maxY))
+      ctx?.strokePath()
     }
     
   }

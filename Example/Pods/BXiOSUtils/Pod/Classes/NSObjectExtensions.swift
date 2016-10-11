@@ -16,7 +16,7 @@ public extension NSObject{
     // self.hook_viewWillDisappear(animated)
   // }
   //
-  public class func bx_swapInstanceMethod(original:Selector,replacement:Selector){
+  public class func bx_swapInstanceMethod(_ original:Selector,replacement:Selector){
     let originalMethod = class_getInstanceMethod(self, original)
     let replacementMethod = class_getInstanceMethod(self, replacement)
     let didAddMethod = class_addMethod(self, original, method_getImplementation(replacementMethod), method_getTypeEncoding(replacementMethod))
@@ -28,7 +28,7 @@ public extension NSObject{
     
   }
   
-  public class func bx_swapClassMethod(original:Selector,replacement:Selector){
+  public class func bx_swapClassMethod(_ original:Selector,replacement:Selector){
     let originalMethod = class_getClassMethod(self, original)
     let replacementMethod = class_getClassMethod(self, replacement)
     let didAddMethod = class_addMethod(self, original, method_getImplementation(replacementMethod), method_getTypeEncoding(replacementMethod))
@@ -50,16 +50,16 @@ public extension NSObject{
 //  }
 
 public extension NSObjectProtocol{
-  public func with(@noescape using: Self -> Void ) -> Self{
+  public func with(_ using: (Self) -> Void ) -> Self{
     using(self)
     return self
   }
 }
 
-public func with<T>(inout this:T, @noescape using:inout T -> Void){
-  using(&this)
-}
+//public func with<T>(_ this:inout T, @noescape using:inout (T) -> Void){
+//  using(&this)
+//}
 
-public func with<T>(this:T, @noescape using: T -> Void ){
+public func with<T>(_ this:T, using: (T) -> Void ){
   using(this)
 }

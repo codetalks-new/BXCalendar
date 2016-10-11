@@ -9,24 +9,24 @@
 import UIKit
 
 public enum BXOutlineStyle:Int{
-  case Rounded
-  case Oval
-  case Semicircle
+  case rounded
+  case oval
+  case semicircle
 }
 
-public class OutlineButton: UIButton {
+open class OutlineButton: UIButton {
   
-  public init(style:BXOutlineStyle = .Rounded){
+  public init(style:BXOutlineStyle = .rounded){
     super.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
     outlineStyle = style
   }
-  public var useTitleColorAsStrokeColor = true {
+  open var useTitleColorAsStrokeColor = true {
     didSet{
       updateOutlineColor()
     }
   }
   
-  public var outlineColor:UIColor?{
+  open var outlineColor:UIColor?{
     didSet{
       updateOutlineColor()
     }
@@ -37,19 +37,19 @@ public class OutlineButton: UIButton {
     super.init(coder: aDecoder)
   }
   
-  public var outlineStyle = BXOutlineStyle.Rounded{
+  open var outlineStyle = BXOutlineStyle.rounded{
     didSet{
       updateOutlinePath()
     }
   }
   
-  public var cornerRadius:CGFloat = 4.0 {
+  open var cornerRadius:CGFloat = 4.0 {
     didSet{
       updateOutlinePath()
     }
   }
   
-  public var lineWidth :CGFloat = 0.5 {
+  open var lineWidth :CGFloat = 0.5 {
     didSet{
       outlineLayer.lineWidth = lineWidth
     }
@@ -57,24 +57,24 @@ public class OutlineButton: UIButton {
   
   
   
-  public lazy var maskLayer : CAShapeLayer = { [unowned self] in
+  open lazy var maskLayer : CAShapeLayer = { [unowned self] in
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.frame
     self.layer.mask = maskLayer
     return maskLayer
     }()
   
-  public lazy var outlineLayer : CAShapeLayer = { [unowned self] in
+  open lazy var outlineLayer : CAShapeLayer = { [unowned self] in
     let outlineLayer = CAShapeLayer()
     outlineLayer.frame = self.frame
     outlineLayer.lineWidth = self.lineWidth
-    outlineLayer.fillColor = UIColor.clearColor().CGColor
-    outlineLayer.strokeColor = self.currentTitleColor.CGColor
+    outlineLayer.fillColor = UIColor.clear.cgColor
+    outlineLayer.strokeColor = self.currentTitleColor.cgColor
     self.layer.addSublayer(outlineLayer)
     return outlineLayer
     }()
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     maskLayer.frame = bounds
     outlineLayer.frame = bounds
@@ -82,32 +82,32 @@ public class OutlineButton: UIButton {
     updateOutlinePath()
   }
   
-  private func updateOutlinePath(){
+  fileprivate func updateOutlinePath(){
     let path:UIBezierPath
     switch outlineStyle{
-    case .Rounded:
+    case .rounded:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-    case .Oval:
-      path = UIBezierPath(ovalInRect: bounds)
-    case .Semicircle:
+    case .oval:
+      path = UIBezierPath(ovalIn: bounds)
+    case .semicircle:
       path = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.height * 0.5)
     }
-    maskLayer.path = path.CGPath
-    outlineLayer.path = path.CGPath
+    maskLayer.path = path.cgPath
+    outlineLayer.path = path.cgPath
   }
   
-  private func updateOutlineColor(){
+  fileprivate func updateOutlineColor(){
     if let color = outlineColor{
-      outlineLayer.strokeColor = color.CGColor
+      outlineLayer.strokeColor = color.cgColor
     }else if useTitleColorAsStrokeColor{
-      outlineLayer.strokeColor = currentTitleColor.CGColor
+      outlineLayer.strokeColor = currentTitleColor.cgColor
     }else{
-      outlineLayer.strokeColor = tintColor.CGColor
+      outlineLayer.strokeColor = tintColor.cgColor
     }
   }
   
   
-  public override func tintColorDidChange() {
+  open override func tintColorDidChange() {
     super.tintColorDidChange()
     updateOutlineColor()
   }

@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class BXBasicItemTableViewCell:UITableViewCell{
-    public class var cellStyle : UITableViewCellStyle{
-        return .Default
+open class BXBasicItemTableViewCell:UITableViewCell{
+    open class var cellStyle : UITableViewCellStyle{
+        return .default
     }
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: self.dynamicType.cellStyle, reuseIdentifier: reuseIdentifier)
+        super.init(style: type(of: self).cellStyle, reuseIdentifier: reuseIdentifier)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -22,56 +22,56 @@ public class BXBasicItemTableViewCell:UITableViewCell{
     }
 }
 
-public class BXBasicItemValue1TableViewCell:BXBasicItemTableViewCell{
-    public static override var cellStyle : UITableViewCellStyle{
-        return .Value1
+open class BXBasicItemValue1TableViewCell:BXBasicItemTableViewCell{
+    open static override var cellStyle : UITableViewCellStyle{
+        return .value1
     }
     
 }
 
-public class BXBasicItemValue2TableViewCell:BXBasicItemTableViewCell{
-    public static override var cellStyle : UITableViewCellStyle{
-        return .Value2
+open class BXBasicItemValue2TableViewCell:BXBasicItemTableViewCell{
+    open static override var cellStyle : UITableViewCellStyle{
+        return .value2
     }
 }
 
-public class BXBasicItemSubtitleTableViewCell:BXBasicItemTableViewCell{
-    public static override var cellStyle : UITableViewCellStyle{
-        return .Subtitle
+open class BXBasicItemSubtitleTableViewCell:BXBasicItemTableViewCell{
+    open static override var cellStyle : UITableViewCellStyle{
+        return .subtitle
     }
 }
 
 extension BXBasicItemTableViewCell:BXBindable{
-    public func bind(item:BXBasicItemAware){
+    public func bind(_ item:BXBasicItemAware){
         textLabel?.text = item.bx_text
         detailTextLabel?.text = item.bx_detailText
     }
 }
 
-public class SimpleTableViewAdapter<T:BXBasicItemAware>:SimpleGenericTableViewAdapter<T,BXBasicItemTableViewCell>{
-    public let cellStyle:UITableViewCellStyle
-    public var cellAccessoryType:UITableViewCellAccessoryType = .None
-    public init(tableView: UITableView? = nil, items: [T] = [], cellStyle:UITableViewCellStyle = .Value2) {
+open class SimpleTableViewAdapter<T:BXBasicItemAware>:SimpleGenericTableViewAdapter<T,BXBasicItemTableViewCell>{
+    open let cellStyle:UITableViewCellStyle
+    open var cellAccessoryType:UITableViewCellAccessoryType = .none
+    public init(tableView: UITableView? = nil, items: [T] = [], cellStyle:UITableViewCellStyle = .value2) {
         self.cellStyle = cellStyle
         super.init(tableView: tableView, items: items)
     }
   
-    public override func bindTo(tableView: UITableView) {
+    open override func bindTo(_ tableView: UITableView) {
       super.bindTo(tableView)
-      tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+      tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
     }
     
     var cellClass:BXBasicItemTableViewCell.Type{
         switch cellStyle{
-        case .Default:return BXBasicItemTableViewCell.self
-        case .Value1:return BXBasicItemValue1TableViewCell.self
-        case .Value2:return BXBasicItemValue2TableViewCell.self
-        case .Subtitle:return BXBasicItemSubtitleTableViewCell.self
+        case .default:return BXBasicItemTableViewCell.self
+        case .value1:return BXBasicItemValue1TableViewCell.self
+        case .value2:return BXBasicItemValue2TableViewCell.self
+        case .subtitle:return BXBasicItemSubtitleTableViewCell.self
         }
     }
     
    
-    public override func configureCell(cell: BXBasicItemTableViewCell , atIndexPath indexPath: NSIndexPath) {
+    open override func configureCell(_ cell: BXBasicItemTableViewCell , atIndexPath indexPath: IndexPath) {
        cell.accessoryType = cellAccessoryType
         super.configureCell(cell, atIndexPath: indexPath)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal func simpleClassName(type:Any) -> String{
+internal func simpleClassName(_ type:Any) -> String{
     let fullName = "\(type)"
-    return fullName.componentsSeparatedByString(".").last!
+    return fullName.components(separatedBy: ".").last!
 }

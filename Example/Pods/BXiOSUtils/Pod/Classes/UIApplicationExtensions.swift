@@ -10,15 +10,15 @@ import UIKit
 
 public extension UIApplication{
   public var  isActive:Bool{
-    return applicationState == .Active
+    return applicationState == .active
   }
   
   public var isInactive:Bool{
-    return applicationState == .Inactive
+    return applicationState == .inactive
   }
   
   public var isBackground:Bool{
-    return applicationState == .Background
+    return applicationState == .background
   }
   
   public var rootViewController:UIViewController?{

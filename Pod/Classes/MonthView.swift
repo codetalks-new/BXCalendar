@@ -11,41 +11,41 @@ import BXForm
 import BXModel
 import PinAuto
 
-public class MonthView:UICollectionView{
-  public let monthDate:NSDate
+open class MonthView:UICollectionView{
+  open let monthDate:Foundation.Date
   
-  private lazy var flowLayout:UICollectionViewFlowLayout = {
+  fileprivate lazy var flowLayout:UICollectionViewFlowLayout = {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.itemSize = CGSize(width:55,height:25)
 //    flowLayout.estimatedItemSize = flowLayout.itemSize
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    flowLayout.scrollDirection = .Vertical
+    flowLayout.scrollDirection = .vertical
     return flowLayout
   }()
   
-  let adapter = SimpleGenericCollectionViewAdapter<NSDate,NSDateCell>()
-  let monthDates:[NSDate]
-  let gridDates:[NSDate]
+  let adapter = SimpleGenericCollectionViewAdapter<Foundation.Date,NSDateCell>()
+  let monthDates:[Foundation.Date]
+  let gridDates:[Foundation.Date]
   
-  public var readonly = false{
+  open var readonly = false{
     didSet{
-      userInteractionEnabled = !readonly
+      isUserInteractionEnabled = !readonly
     }
   }
   
-  public init(date:NSDate){
+  public init(date:Foundation.Date){
     self.monthDate = date
     self.monthDates = generateMonthDaysByDate(date)
     self.gridDates = gridDatesFromMonthDates(self.monthDates)
-    super.init(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+    super.init(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     self.collectionViewLayout = self.flowLayout
     
     allowsMultipleSelection =  true
     allowsSelection = true
     
-    userInteractionEnabled = !readonly
+    isUserInteractionEnabled = !readonly
     
     adapter.updateItems(self.gridDates)
     adapter.bindTo(self)
@@ -53,10 +53,10 @@ public class MonthView:UICollectionView{
     adapter.didSelectedItem = { date,index in
      DateManager.sharedManager.toggleAdd(date)
     }
-    for (index,day) in gridDates.enumerate(){
+    for (index,day) in gridDates.enumerated(){
       if DateManager.sharedManager.contains(day){
-        let indexPath = NSIndexPath(forItem: index, inSection: 0)
-        selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        let indexPath = IndexPath(item: index, section: 0)
+        selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition())
       }
     }
     
@@ -78,58 +78,59 @@ public class MonthView:UICollectionView{
     flowLayout.itemSize = itemSize
   }
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     autoUpdateItemSize()
   }
   
-  public var month:Int{
+  open var month:Int{
     return monthDate.month
   }
 }
 
-let timeIntervalOfDay:NSTimeInterval = 24 * 60 * 60
+let timeIntervalOfDay:TimeInterval = 24 * 60 * 60
 
 
 
-func generateMonthDaysByDate(date:NSDate) -> [NSDate]{
-  let calendar = NSCalendar.currentCalendar()
-  let day = calendar.component(.Day, fromDate: date)
-  let dayRange = calendar.rangeOfUnit(.Day, inUnit: .Month, forDate: date).toRange()!
-  var dates = [NSDate]()
-  for ordinal in dayRange{
-    let diff = NSTimeInterval(ordinal - day) * timeIntervalOfDay
-    let newDate = date.dateByAddingTimeInterval(diff)
+func generateMonthDaysByDate(_ date:Foundation.Date) -> [Foundation.Date]{
+  let calendar = Calendar.current
+  let day = calendar.component(.day, from: date)
+  let ordinalRange = calendar.range(of: .day, in: .month, for: date)!
+  
+  var dates = [Date]()
+  for ordinal in CountableRange(ordinalRange) {
+    let diff = TimeInterval(ordinal - day) * timeIntervalOfDay
+    let newDate = date.addingTimeInterval(diff)
     dates.append(newDate)
   }
   
   return dates
 }
 
-let placeholderDate = NSDate(timeIntervalSince1970: 0)
+let placeholderDate = Foundation.Date(timeIntervalSince1970: 0)
 
-func gridDatesFromMonthDates(monthDates:[NSDate]) -> [NSDate]{
+func gridDatesFromMonthDates(_ monthDates:[Foundation.Date]) -> [Foundation.Date]{
   var dates = monthDates
   let monthStartDate = monthDates[0]
-  let weekday = calendar.component(.Weekday, fromDate: monthStartDate)
+  let weekday = (calendar as NSCalendar).component(.weekday, from: monthStartDate)
   let paddingDayCount = weekday == 1 ? 6 : weekday - 2
   if paddingDayCount  < 1{
     return dates
   }
-  var paddingDates:[NSDate] = []
-  for _ in (1...paddingDayCount).reverse(){
+  var paddingDates:[Foundation.Date] = []
+  for _ in (1...paddingDayCount).reversed(){
 //    let days = NSTimeInterval(i)
 //    let newDate = monthStartDate.dateByAddingTimeInterval(-(days * timeIntervalOfDay))
 //    paddingDates.append(newDate)
     paddingDates.append(placeholderDate)
   }
   
-  dates.insertContentsOf(paddingDates, at: 0)
+  dates.insert(contentsOf: paddingDates, at: 0)
   return dates
   
 }
 
-extension NSDate{
+extension Foundation.Date{
   var isPlaceholder:Bool{
     return timeIntervalSince1970 < timeIntervalOfDay
   }

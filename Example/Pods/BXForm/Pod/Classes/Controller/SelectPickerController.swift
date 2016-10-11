@@ -8,25 +8,25 @@
 
 import UIKit
 
-public class SelectPickerController<T:CustomStringConvertible where T:Equatable>:PickerController,UIPickerViewDataSource,UIPickerViewDelegate{
-  private var options:[T] = []
-  public var rowHeight:CGFloat = 36{
+open class SelectPickerController<T:CustomStringConvertible>:PickerController,UIPickerViewDataSource,UIPickerViewDelegate where T:Equatable{
+  fileprivate var options:[T] = []
+  open var rowHeight:CGFloat = 36{
     didSet{
       picker.reloadAllComponents()
     }
   }
-  public var textColor = UIColor.darkTextColor(){
+  open var textColor = UIColor.darkText{
     didSet{
       picker.reloadAllComponents()
     }
   }
-  public var font = UIFont.systemFontOfSize(14){
+  open var font = UIFont.systemFont(ofSize: 14){
     didSet{
       picker.reloadAllComponents()
     }
   }
   
-  public var onSelectOption:(T -> Void)?
+  open var onSelectOption:((T) -> Void)?
   
   public init(options:[T]){
    self.options = options
@@ -36,8 +36,12 @@ public class SelectPickerController<T:CustomStringConvertible where T:Equatable>
   public init(){
     super.init(nibName: nil, bundle: nil)
   }
+
+  required public init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+  }
  
-  public override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
     picker.delegate = self
     picker.dataSource = self
@@ -45,53 +49,59 @@ public class SelectPickerController<T:CustomStringConvertible where T:Equatable>
   }
   
   
-  public func selectOption(option:T){
-    let index = options.indexOf { $0 == option }
+  open func selectOption(_ option:T){
+    let index = options.index { $0 == option }
     if let row = index{
       picker.selectRow(row, inComponent: 0, animated: true)
     }
     
   }
   
-  public func updateOptions(options:[T]){
+  open func updateOptions(_ options:[T]){
     self.options = options
-    if isViewLoaded(){
+    if isViewLoaded{
       picker.reloadAllComponents()
     }
   }
   
-  public func appendOptions(options:[T]){
-    self.options.appendContentsOf(options)
+  open func appendOptions(_ options:[T]){
+    self.options.append(contentsOf: options)
     picker.reloadAllComponents()
   }
   
-  public func appendOption(option:T){
+  open func appendOption(_ option:T){
     self.options.append(option)
     picker.reloadAllComponents()
   }
   
  
-  func optionAtRow(row:Int) -> T{
+  func optionAtRow(_ row:Int) -> T?{
+    if options.count <= row  || row < 0{
+      return nil
+    }
     return options[row]
   }
   
   // MARK: UIPickerViewDataSource
-  public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+  open func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
   
-  public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+  open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return component == 0 ? options.count : 0
   }
   
   
   // MARK: UIPickerViewDelegate
-  public func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+  open func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
     return rowHeight
   }
   
-  public func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    let title = optionAtRow(row).description
+  open func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    guard let option = optionAtRow(row) else{
+      return nil
+    }
+    let title = option.description
     let attributedText = NSAttributedString(string: title, attributes: [
       NSForegroundColorAttributeName:textColor,
       NSFontAttributeName:font
@@ -100,10 +110,14 @@ public class SelectPickerController<T:CustomStringConvertible where T:Equatable>
   }
 
   // MARK: Base Controller
-  override public func onPickDone() {
-    let selectedRow = picker.selectedRowInComponent(0)
-    let option = optionAtRow(selectedRow)
-    onSelectOption?(option)
+  override open func onPickDone() {
+    if options.isEmpty{
+      return
+    }
+    let selectedRow = picker.selectedRow(inComponent: 0)
+    if let option = optionAtRow(selectedRow){
+      onSelectOption?(option)
+    }
   }
   
 }

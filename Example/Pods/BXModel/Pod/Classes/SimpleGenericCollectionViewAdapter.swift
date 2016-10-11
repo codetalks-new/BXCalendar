@@ -9,37 +9,37 @@
 import UIKit
 
 
-public class SimpleGenericCollectionViewAdapter<T:BXModelAware,V:UICollectionViewCell where V:BXBindable >: SimpleGenericDataSource<T>,UICollectionViewDelegate{
-  public private(set) weak var collectionView:UICollectionView?
-  public var didSelectedItem: DidSelectedItemBlock?
-  public var preBindCellBlock:( (V,NSIndexPath) -> Void )?
-  public var postBindCellBlock:( (V,NSIndexPath) -> Void )?
+open class SimpleGenericCollectionViewAdapter<T:BXModelAware,V:UICollectionViewCell>: SimpleGenericDataSource<T>,UICollectionViewDelegate where V:BXBindable {
+  open fileprivate(set) weak var collectionView:UICollectionView?
+  open var didSelectedItem: DidSelectedItemBlock?
+  open var preBindCellBlock:( (V,IndexPath) -> Void )?
+  open var postBindCellBlock:( (V,IndexPath) -> Void )?
   
   public init(collectionView:UICollectionView? = nil,items:[T] = []){
     super.init(items: items)
-    self.reuseIdentifier = simpleClassName(V)+"_cell"
+    self.reuseIdentifier = simpleClassName(V.self)+"_cell"
     if let c = collectionView{
       bindTo(c)
     }
   }
   
- public func bindTo(collectionView:UICollectionView){
+ open func bindTo(_ collectionView:UICollectionView){
     self.collectionView = collectionView
     collectionView.delegate = self
     collectionView.dataSource = self
     if V.hasNib{
-      collectionView.registerNib(V.nib(), forCellWithReuseIdentifier: reuseIdentifier)
+      collectionView.register(V.nib(), forCellWithReuseIdentifier: reuseIdentifier)
     }else{
-      collectionView.registerClass(V.self, forCellWithReuseIdentifier: reuseIdentifier)
+      collectionView.register(V.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
   }
   
-  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    self.didSelectedItem?(itemAtIndexPath(indexPath),atIndexPath:indexPath)
+  open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    self.didSelectedItem?(itemAtIndexPath(indexPath),indexPath)
   }
   
-  public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(self.reuseIdentifier, forIndexPath: indexPath) as! V
+  open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! V
     preBindCellBlock?(cell,indexPath)
     let model = itemAtIndexPath(indexPath)
     if let m = model as? V.ModelType{
@@ -51,14 +51,14 @@ public class SimpleGenericCollectionViewAdapter<T:BXModelAware,V:UICollectionVie
   
   
   
-  public override func updateItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  open override func updateItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
     super.updateItems(items)
     collectionView?.reloadData()
   }
   
   
   
-  public override func appendItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  open override func appendItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
     super.appendItems(items)
     collectionView?.reloadData()
   }

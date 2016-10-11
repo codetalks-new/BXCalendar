@@ -17,16 +17,16 @@ let weekdays  = "一二三四五六日".characters.map{ String($0)}
 
 //-IdleTimeHeaderView:v
 
-public class WeekdayBar : GridView{
+open class WeekdayBar : GridView{
   
   lazy var weekdayHeaders :[UILabel] = {
     return weekdays.map{ WeekdayBar.createWeekdayHeader($0) }
   }()
   
-  let placeHolder = UIView(frame: CGRectZero)
+  let placeHolder = UIView(frame: CGRect.zero)
   
-  static func createWeekdayHeader(weekday:String) -> UILabel{
-    let label = UILabel(frame: CGRectZero)
+  static func createWeekdayHeader(_ weekday:String) -> UILabel{
+    let label = UILabel(frame: CGRect.zero)
     label.text = weekday
     return label
   }
@@ -38,7 +38,7 @@ public class WeekdayBar : GridView{
   }
   
   
-  override public func awakeFromNib() {
+  override open func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }
@@ -60,8 +60,8 @@ public class WeekdayBar : GridView{
   func setupAttrs(){
     backgroundColor = FormColors.accentColor
     for label in weekdayHeaders{
-      label.font = UIFont.systemFontOfSize(15)
-      label.textColor = .whiteColor()
+      label.font = UIFont.systemFont(ofSize: 15)
+      label.textColor = .white
     }
   }
 }

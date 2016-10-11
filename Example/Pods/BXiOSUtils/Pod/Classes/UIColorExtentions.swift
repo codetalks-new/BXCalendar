@@ -14,10 +14,10 @@ public extension UIColor{
     if hexString.isEmpty{
       return nil
     }
-    let scanner = NSScanner(string:hexString)
+    let scanner = Scanner(string:hexString)
     scanner.scanLocation = 1 // by pass first '#' char
     var rgbValue:UInt32 = 0
-    scanner.scanHexInt(&rgbValue)
+    scanner.scanHexInt32(&rgbValue)
     self.init(hex:Int(rgbValue))
   }
   

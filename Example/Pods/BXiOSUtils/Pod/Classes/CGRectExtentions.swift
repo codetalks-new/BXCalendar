@@ -11,7 +11,7 @@ import UIKit
 
 public extension CGSize{
   
-  public func sizeByScaleToWidth(width:CGFloat) -> CGSize{
+  public func sizeByScaleToWidth(_ width:CGFloat) -> CGSize{
     let factor =  width / self.width
     let h = self.height * factor
     return CGSize(width: width, height: h)
@@ -23,15 +23,15 @@ public extension CGSize{
 }
 
 public extension CGRect{
-  public func rectBySliceLeft(left:CGFloat) -> CGRect{
+  public func rectBySliceLeft(_ left:CGFloat) -> CGRect{
     return CGRect(x: origin.x + left, y: origin.y, width: width - left, height: height)
   }
   
-  public func rectBySliceRight(right:CGFloat) -> CGRect{
+  public func rectBySliceRight(_ right:CGFloat) -> CGRect{
     return CGRect(x: origin.x, y: origin.y, width: width - right, height: height)
   }
   
-  public func rectBySliceTop(top:CGFloat) -> CGRect{
+  public func rectBySliceTop(_ top:CGFloat) -> CGRect{
     return insetBy(dx: 0, dy: top)
   }
 }
@@ -49,7 +49,7 @@ extension CGRect{
   
   public init(center:CGPoint,radius:CGFloat){
     origin = CGPoint(x: center.x - radius, y: center.y - radius)
-    size = CGSize(width: radius, height: radius)
+    size = CGSize(width: radius * 2, height: radius * 2)
   }
   
   public init(center:CGPoint,width:CGFloat, height:CGFloat){

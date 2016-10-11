@@ -26,12 +26,12 @@ extension String:BXBasicItemAware{
   public var bx_detailText:String{ return ""}
 }
 
-public class BXBasicItem: BXBasicItemAware{
-    public let text:String
-    public let detailText:String
+open class BXBasicItem: BXBasicItemAware{
+    open let text:String
+    open let detailText:String
     
-    public var bx_text:String { return text }
-    public var bx_detailText:String { return detailText }
+    open var bx_text:String { return text }
+    open var bx_detailText:String { return detailText }
     
     public init(text:String,detailText:String){
         self.text = text

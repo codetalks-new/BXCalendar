@@ -7,17 +7,17 @@
 import UIKit
 
 //@IBDesignable // reduce performance
-public class CircleImageView: UIImageView {
+open class CircleImageView: UIImageView {
   
   //    @IBInspectable
-  public var borderWidth:CGFloat=3.0{
+  open var borderWidth:CGFloat=3.0{
     didSet{
       updateBorderStyle()
     }
   }
   
   //    @IBInspectable
-  public var borderColor:UIColor=UIColor(white: 0.5, alpha: 0.5){
+  open var borderColor:UIColor=UIColor(white: 0.5, alpha: 0.5){
     didSet{
       updateBorderStyle()
     }
@@ -25,9 +25,9 @@ public class CircleImageView: UIImageView {
   
 
   
-  public func updateBorderStyle(){
+  open func updateBorderStyle(){
     layer.borderWidth = borderWidth
-    layer.borderColor = borderColor.CGColor
+    layer.borderColor = borderColor.cgColor
   }
   
   func commonInit(){
@@ -36,7 +36,7 @@ public class CircleImageView: UIImageView {
     updateBorderStyle()
   }
   
-  public lazy var maskLayer : CAShapeLayer = { [unowned self] in
+  open lazy var maskLayer : CAShapeLayer = { [unowned self] in
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.frame
     self.layer.mask = maskLayer
@@ -44,18 +44,18 @@ public class CircleImageView: UIImageView {
   }()
   
   
-  public override func layoutSubviews() {
+  open override func layoutSubviews() {
     super.layoutSubviews()
     layer.cornerRadius = bounds.width * 0.5
     maskLayer.frame = bounds
-    maskLayer.path = UIBezierPath(ovalInRect:bounds.insetBy(dx: borderWidth, dy: borderWidth)).CGPath
+    maskLayer.path = UIBezierPath(ovalIn:bounds.insetBy(dx: borderWidth, dy: borderWidth)).cgPath
   }
   
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
   
-  override public func awakeFromNib() {
+  override open func awakeFromNib() {
     super.awakeFromNib()
     commonInit()
   }

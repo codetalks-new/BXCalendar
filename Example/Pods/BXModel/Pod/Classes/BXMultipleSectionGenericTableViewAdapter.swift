@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class BXMultipleSectionGenericTableViewAdapter<Key:Hashable,T:BXModelAware,V:UITableViewCell where V:BXBindable, Key:StringInterpolationConvertible>: BXMutipleSectionGenericDataSource<Key,T>,UITableViewDelegate{
-  public private(set) var tableView:UITableView?
-  public var didSelectedItem: DidSelectedItemBlock?
-  public var configureCellBlock:( (V,NSIndexPath) -> Void )?
+open class BXMultipleSectionGenericTableViewAdapter<Key:Hashable,T:BXModelAware,V:UITableViewCell>: BXMutipleSectionGenericDataSource<Key,T>,UITableViewDelegate where V:BXBindable{
+  open fileprivate(set) var tableView:UITableView?
+  open var didSelectedItem: DidSelectedItemBlock?
+  open var configureCellBlock:( (V,IndexPath) -> Void )?
   public init(tableView:UITableView? = nil,dict:Dictionary<Key,[T]> = [:]){
     super.init(dict: dict)
     if let tableView = tableView{
@@ -19,15 +19,15 @@ public class BXMultipleSectionGenericTableViewAdapter<Key:Hashable,T:BXModelAwar
     }
   }
   
-  public func bindTo(tableView:UITableView){
+  open func bindTo(_ tableView:UITableView){
     self.tableView = tableView
     tableView.dataSource = self
     tableView.delegate = self
-    self.reuseIdentifier = simpleClassName(V)+"_cell"
+    self.reuseIdentifier = simpleClassName(V.self)+"_cell"
     if V.hasNib{
-      tableView.registerNib(V.nib(), forCellReuseIdentifier: reuseIdentifier)
+      tableView.register(V.nib(), forCellReuseIdentifier: reuseIdentifier)
     }else{
-      tableView.registerClass(V.self, forCellReuseIdentifier: reuseIdentifier)
+      tableView.register(V.self, forCellReuseIdentifier: reuseIdentifier)
     }
   }
   
@@ -35,19 +35,19 @@ public class BXMultipleSectionGenericTableViewAdapter<Key:Hashable,T:BXModelAwar
   //MARK: TableViewDelegate
   
 
-  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    self.didSelectedItem?(itemAtIndexPath(indexPath),atIndexPath:indexPath)
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    self.didSelectedItem?(itemAtIndexPath(indexPath),indexPath)
+    tableView.deselectRow(at: indexPath, animated: true)
   }
   
   // DataSource Override
   
-  public override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     return cellForRowAtIndexPath(indexPath)
   }
   
-  public func cellForRowAtIndexPath(indexPath:NSIndexPath) -> V {
-    let cell = tableView!.dequeueReusableCellWithIdentifier(self.reuseIdentifier, forIndexPath: indexPath) as! V
+  open func cellForRowAtIndexPath(_ indexPath:IndexPath) -> V {
+    let cell = tableView!.dequeueReusableCell(withIdentifier: self.reuseIdentifier, for: indexPath) as! V
     let model = itemAtIndexPath(indexPath)
     if let m = model as? V.ModelType{
       cell.bind(m)
@@ -56,11 +56,11 @@ public class BXMultipleSectionGenericTableViewAdapter<Key:Hashable,T:BXModelAwar
     return cell
   }
   
-  public func configureCell(cell:V,atIndexPath indexPath:NSIndexPath){
+  open func configureCell(_ cell:V,atIndexPath indexPath:IndexPath){
     self.configureCellBlock?(cell,indexPath)
   }
   
-  public override func updateDict(dict: [Key:[T]]) {
+  open override func updateDict(_ dict: [Key:[T]]) {
     super.updateDict(dict)
     tableView?.reloadData()
   }

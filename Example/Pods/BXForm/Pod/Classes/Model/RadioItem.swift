@@ -13,7 +13,7 @@ public protocol BXRadioItemAware:BXModelAware{
   var bx_title:String{ get }
 }
 
-public class BXRadioItem:BXModelAware{
+open class BXRadioItem:BXModelAware{
   let title:String
   
   init(title:String){

@@ -12,66 +12,66 @@ public extension UIImage{
   
   
   
-  public class func bx_image(hex:Int,alpha:Double=1.0) -> UIImage{
+  public class func bx_image(_ hex:Int,alpha:Double=1.0) -> UIImage{
     return bx_image(UIColor(hex: hex, alpha: alpha))
   }
   
-  public class func bx_transparentImage(size:CGSize=CGSize(width: 1, height: 1)) -> UIImage{
+  public class func bx_transparentImage(_ size:CGSize=CGSize(width: 1, height: 1)) -> UIImage{
     let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     let ctx = UIGraphicsGetCurrentContext()
-    UIColor.clearColor().setFill()
-    CGContextFillRect(ctx, rect)
+    UIColor.clear.setFill()
+    ctx?.fill(rect)
     let img = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return img
+    return img!
   }
   
   
-  public static func bx_circleImage(color:UIColor,radius:CGFloat) -> UIImage{
+  public static func bx_circleImage(_ color:UIColor,radius:CGFloat) -> UIImage{
     let size = CGSize(width: radius * 2, height: radius * 2)
     let cornerRadius = radius
     return bx_roundImage(color, size: size, cornerRadius: cornerRadius)
   }
   
-  public static func bx_roundImage(color:UIColor,size:CGSize=CGSize(width: 32, height: 32),cornerRadius:CGFloat = 4) -> UIImage{
+  public static func bx_roundImage(_ color:UIColor,size:CGSize=CGSize(width: 32, height: 32),cornerRadius:CGFloat = 4) -> UIImage{
     let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     let ctx = UIGraphicsGetCurrentContext()
-    UIColor.clearColor().setFill()
-    CGContextFillRect(ctx, rect)
+    UIColor.clear.setFill()
+    ctx?.fill(rect)
     color.setFill()
     let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
     path.lineWidth  = 2
     path.fill()
     let img = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return img
+    return img!
   }
   
-  public class func bx_image(color:UIColor,width:CGFloat) -> UIImage{
+  public class func bx_image(_ color:UIColor,width:CGFloat) -> UIImage{
     return bx_image(color, size: CGSize(width: width, height: width))
   }
   
-  public class func bx_image(color:UIColor,size:CGSize=CGSize(width: 1, height: 1)) -> UIImage{
+  public class func bx_image(_ color:UIColor,size:CGSize=CGSize(width: 1, height: 1)) -> UIImage{
     let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, true, 0)
     let ctx = UIGraphicsGetCurrentContext()
     color.setFill()
-    CGContextFillRect(ctx, rect)
+    ctx?.fill(rect)
     let img = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return img
+    return img!
   }
   
   @nonobjc
-  public static func bx_placeholder(width:CGFloat) -> UIImage{
+  public static func bx_placeholder(_ width:CGFloat) -> UIImage{
     return bx_placeholder(CGSize(width: width, height: width))
   }
   
   @nonobjc
-  public static func bx_placeholder(size:CGSize) -> UIImage{
-    return bx_image(UIColor.whiteColor(), size: size)
+  public static func bx_placeholder(_ size:CGSize) -> UIImage{
+    return bx_image(UIColor.white, size: size)
   }
   
   
@@ -79,71 +79,79 @@ public extension UIImage{
   /**
    diameter:直径
    **/
-  public  func bx_circularImage(diameter diameter:CGFloat, highlightedColor:UIColor? = nil) -> UIImage {
+  public  func bx_circularImage(diameter:CGFloat, highlightedColor:UIColor? = nil) -> UIImage {
       let frame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
       UIGraphicsBeginImageContextWithOptions(frame.size, false,0.0)
       let ctx = UIGraphicsGetCurrentContext()
-      CGContextSaveGState(ctx)
-      let imgPath = UIBezierPath(ovalInRect: frame)
+      ctx?.saveGState()
+      let imgPath = UIBezierPath(ovalIn: frame)
       imgPath.addClip()
-      drawInRect(frame)
+      draw(in: frame)
       if let color = highlightedColor{
         color.setFill()
-        CGContextFillEllipseInRect(ctx, frame)
+        ctx?.fillEllipse(in: frame)
       }
       let newImage = UIGraphicsGetImageFromCurrentImageContext()
       UIGraphicsEndImageContext()
-      return newImage
+      return newImage!
       
   }
   
-  public  func bx_highlightImage( highlightedColor:UIColor? = nil,circular:Bool=true) -> UIImage {
+  public  func bx_highlightImage( _ highlightedColor:UIColor? = nil,circular:Bool=true) -> UIImage {
       let frame = CGRect(x: 0, y: 0, width: size.width , height: size.height )
       let color = highlightedColor ?? UIColor(white: 0.1, alpha: 0.3)
       UIGraphicsBeginImageContextWithOptions(frame.size, false,scale)
       let ctx = UIGraphicsGetCurrentContext()
-      CGContextSaveGState(ctx)
+      ctx?.saveGState()
       if circular{
-        let imgPath = UIBezierPath(ovalInRect: frame)
+        let imgPath = UIBezierPath(ovalIn: frame)
         imgPath.addClip()
       }else{
         let imgPath = UIBezierPath(roundedRect: frame, cornerRadius: 10)
         imgPath.addClip()
       }
-      drawInRect(frame)
+      draw(in: frame)
       color.setFill()
       if circular{
-        CGContextFillEllipseInRect(ctx, frame)
+        ctx?.fillEllipse(in: frame)
       }else{
-        CGContextFillRect(ctx, frame)
+        ctx?.fill(frame)
       }
       let newImage = UIGraphicsGetImageFromCurrentImageContext()
       UIGraphicsEndImageContext()
-      return newImage
+      return newImage!
   }
   
-  public static func bx_createImage(text:String,backgroundColor:UIColor,
+  public static func bx_createImage(_ text:String,backgroundColor:UIColor,
     textColor:UIColor,font:UIFont,diameter:CGFloat) -> UIImage {
       let frame = CGRect(x: 0, y: 0, width: diameter, height: diameter)
       let attrs = [NSFontAttributeName:font,
         NSForegroundColorAttributeName:textColor
       ]
-      let textFrame = text.boundingRectWithSize(frame.size, options:.UsesFontLeading, attributes: attrs, context: nil)
+      let textFrame = text.boundingRect(with: frame.size, options:.usesFontLeading, attributes: attrs, context: nil)
       
       let dx = frame.midX - textFrame.midX
       let dy = frame.midY - textFrame.midY
       let drawPoint = CGPoint(x: dx, y: dy)
       UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
       let ctx = UIGraphicsGetCurrentContext()
-      CGContextSaveGState(ctx)
+      ctx?.saveGState()
       backgroundColor.setFill()
-      CGContextFillRect(ctx, frame)
-      text.drawAtPoint(drawPoint, withAttributes: attrs)
+      ctx?.fill(frame)
+      text.draw(at: drawPoint, withAttributes: attrs)
       let image = UIGraphicsGetImageFromCurrentImageContext()
-      CGContextRestoreGState(ctx)
+      ctx?.restoreGState()
       UIGraphicsEndImageContext()
-      return image
+      return image!
   }
   
   
 }
+
+public extension UIImage{
+  public var bx_rawImage:UIImage{
+    return self.withRenderingMode(.alwaysOriginal)
+  }
+}
+
+

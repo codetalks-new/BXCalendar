@@ -7,27 +7,27 @@
 import UIKit
 
 let  bx_contentSizeCategoryIndexDict = [
-    UIContentSizeCategoryExtraSmall:0,
-    UIContentSizeCategorySmall:1,
-    UIContentSizeCategoryMedium:2,
-    UIContentSizeCategoryLarge:3,
-    UIContentSizeCategoryExtraLarge:4,
-    UIContentSizeCategoryExtraExtraLarge:5,
-    UIContentSizeCategoryExtraExtraExtraLarge:6,
-    UIContentSizeCategoryAccessibilityMedium:7,
-    UIContentSizeCategoryAccessibilityLarge:8,
-    UIContentSizeCategoryAccessibilityExtraLarge:9,
-    UIContentSizeCategoryAccessibilityExtraExtraLarge:10,
-    UIContentSizeCategoryAccessibilityExtraExtraExtraLarge:11
+    UIContentSizeCategory.extraSmall:0,
+    UIContentSizeCategory.small:1,
+    UIContentSizeCategory.medium:2,
+    UIContentSizeCategory.large:3,
+    UIContentSizeCategory.extraLarge:4,
+    UIContentSizeCategory.extraExtraLarge:5,
+    UIContentSizeCategory.extraExtraExtraLarge:6,
+    UIContentSizeCategory.accessibilityMedium:7,
+    UIContentSizeCategory.accessibilityLarge:8,
+    UIContentSizeCategory.accessibilityExtraLarge:9,
+    UIContentSizeCategory.accessibilityExtraExtraLarge:10,
+    UIContentSizeCategory.accessibilityExtraExtraExtraLarge:11
 ]
 
-public func bx_preferedContentSizeCategory() -> String{
-    return UIApplication.sharedApplication().preferredContentSizeCategory
+public func bx_preferedContentSizeCategory() -> UIContentSizeCategory{
+    return UIApplication.shared.preferredContentSizeCategory
 }
 
 public extension UIFont/*Dynamic Font Size*/{
     
-    public static func bx_fontSize(smallestSize:CGFloat,normalSize:CGFloat,maxNormalSize:CGFloat,
+    public static func bx_fontSize(_ smallestSize:CGFloat,normalSize:CGFloat,maxNormalSize:CGFloat,
         maxAccessibilitySize:CGFloat) -> CGFloat{
         let index = bx_contentSizeCategoryIndexDict[bx_preferedContentSizeCategory()] ??  2
             let fIndex = CGFloat(index)

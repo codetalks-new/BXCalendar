@@ -8,123 +8,123 @@
 
 import UIKit
 
-public class StaticTableViewSection {
-  public var referenceSectionHeaderHeight:CGFloat = 44
-  public var referenceSectionFooterHeight:CGFloat = 44
-  public var sectionHeaderView:UIView?
-  public var sectionFooterView:UIView?
-  public private(set) var cells:[UITableViewCell] = []
+open class StaticTableViewSection {
+  open var referenceSectionHeaderHeight:CGFloat = 44
+  open var referenceSectionFooterHeight:CGFloat = 44
+  open var sectionHeaderView:UIView?
+  open var sectionFooterView:UIView?
+  open fileprivate(set) var cells:[UITableViewCell] = []
   
   public init(cells:[UITableViewCell] = []){
     self.cells = cells
   }
   
-  public func updateCells(cells:[UITableViewCell]){
+  open func updateCells(_ cells:[UITableViewCell]){
     self.cells = cells
   }
   
-  public var numberOfRows:Int{
+  open var numberOfRows:Int{
     return cells.count
   }
   
-  public var sectionHeaderHeight:CGFloat{
+  open var sectionHeaderHeight:CGFloat{
     return sectionHeaderView == nil ? 0:referenceSectionHeaderHeight
   }
   
-  public var sectionFooterHeight:CGFloat{
+  open var sectionFooterHeight:CGFloat{
     return sectionFooterView == nil ? 0:referenceSectionFooterHeight
   }
 }
 
-public class MultipleSectionStaticTableViewAdapter:NSObject,UITableViewDataSource,BXDataSourceContainer,UITableViewDelegate{
-  public private(set) var tableViewSections:[StaticTableViewSection] = []
+open class MultipleSectionStaticTableViewAdapter:NSObject,UITableViewDataSource,BXDataSourceContainer,UITableViewDelegate{
+  open fileprivate(set) var tableViewSections:[StaticTableViewSection] = []
   public typealias ItemType = StaticTableViewSection
   
-  public var didSelectCell:((UITableViewCell,NSIndexPath) -> Void)?
-  public private(set) weak var tableView:UITableView?
+  open var didSelectCell:((UITableViewCell,IndexPath) -> Void)?
+  open fileprivate(set) weak var tableView:UITableView?
   
   public init(sections:[StaticTableViewSection] = []){
     self.tableViewSections = sections
   }
   
-  public func bindTo(tableView:UITableView){
+  open func bindTo(_ tableView:UITableView){
     self.tableView = tableView
     tableView.dataSource = self
     tableView.delegate = self
   }
   
 
-  private func tableViewSectionAt(section:Int) -> StaticTableViewSection{
+  fileprivate func tableViewSectionAt(_ section:Int) -> StaticTableViewSection{
     return tableViewSections[section]
   }
   
-  public func cellAtIndexPath(indexPath:NSIndexPath) -> UITableViewCell{
-    return self.tableViewSectionAt(indexPath.section).cells[indexPath.row]
+  open func cellAtIndexPath(_ indexPath:IndexPath) -> UITableViewCell{
+    return self.tableViewSectionAt((indexPath as NSIndexPath).section).cells[(indexPath as NSIndexPath).row]
   }
   
   // MARK: UITableViewDataSource
-  public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  open func numberOfSections(in tableView: UITableView) -> Int {
     return tableViewSections.count
   }
   
   
-  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.tableViewSectionAt(section).numberOfRows
   }
   
-  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+  open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
     return cellAtIndexPath(indexPath)
   }
   
   // MARK: UITableViewDelegate
-  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let cell = cellAtIndexPath(indexPath)
     self.didSelectCell?(cell,indexPath)
   }
  
-  public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return cellAtIndexPath(indexPath).bx_height
   }
 
-  public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+  open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
       return tableViewSectionAt(section).sectionHeaderHeight
   }
   
-  public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat{
+  open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat{
       return tableViewSectionAt(section).sectionFooterHeight
   }
   
-  public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{ // custom view for header. will be adjusted to default or specified header height
+  open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{ // custom view for header. will be adjusted to default or specified header height
     return tableViewSectionAt(section).sectionHeaderView
   }
   
-  public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?{ // custom view for footer. will be adjusted to default or specified footer height
+  open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView?{ // custom view for footer. will be adjusted to default or specified footer height
     return tableViewSectionAt(section).sectionFooterView
   }
   
   
   // MARK: DataSource Container
-  public func append(section:StaticTableViewSection){
+  open func append(_ section:StaticTableViewSection){
     self.tableViewSections.append(section)
     self.tableView?.reloadData()
   }
   
-  public func appendContentsOf(sections:[StaticTableViewSection]){
-    self.tableViewSections.appendContentsOf(sections)
+  open func appendContentsOf(_ sections:[StaticTableViewSection]){
+    self.tableViewSections.append(contentsOf: sections)
     self.tableView?.reloadData()
   }
   
   
-  public func updateItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
+  open func updateItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
     self.tableViewSections.removeAll()
-    self.tableViewSections.appendContentsOf(items)
+    self.tableViewSections.append(contentsOf: items)
     self.tableView?.reloadData()
   }
   
-  public func appendItems<S : SequenceType where S.Generator.Element == ItemType>(items: S) {
-    self.tableViewSections.appendContentsOf(items)
+  open func appendItems<S : Sequence>(_ items: S) where S.Iterator.Element == ItemType {
+    self.tableViewSections.append(contentsOf: items)
     self.tableView?.reloadData()
   }
-  public var numberOfItems:Int{ return tableViewSections.count }
+  open var numberOfItems:Int{ return tableViewSections.count }
   
 }
